@@ -17,21 +17,21 @@
     --bg-gradient-onyx: linear-gradient(145deg, #2c2c2c, #1a1a1a);
     --bg-gradient-jet: linear-gradient(145deg, #3a3a3a, #2a2a2a);
     --bg-gradient-yellow-1: linear-gradient(145deg, #d73f09, #b32f07);
-    --border-gradient-onyx: {{ border_gradient_onyx }};
-    --text-gradient-yellow: {{ text_gradient_yellow }};
+    --border-gradient-onyx: linear-gradient(145deg, #2c2c2c, #1a1a1a);
+    --text-gradient-yellow: linear-gradient(145deg, #d73f09, #b32f07);
     /* solid */
-    --jet: {{ jet }};
-    --onyx: {{ onyx }};
-    --eerie-black-1: {{ eerie_black_1 }};
-    --eerie-black-2: {{ eerie_black_2 }};
-    --smoky-black: {{ smoky_black }};
-    --white-1: {{ white_1 }};
-    --white-2: {{ white_2 }};
-    --orange-yellow-crayola: {{ orange_yellow_crayola }};
-    --vegas-gold: {{ vegas_gold }};
-    --light-gray: {{ light_gray }};
-    --light-gray-70: {{ light_gray_70 }};
-    --bittersweet-shimmer: {{ bittersweet_shimmer }};
+    --jet: #343434;
+    --onyx: #353535;
+    --eerie-black-1: #1b1b1b;
+    --eerie-black-2: #2a2a2a;
+    --smoky-black: #100c08;
+    --white-1: #f0f0f0;
+    --white-2: #e0e0e0;
+    --orange-yellow-crayola: #d73f09;
+    --vegas-gold: #c5a880;
+    --light-gray: #d3d3d3;
+    --light-gray-70: #b0b0b0;
+    --bittersweet-shimmer: #bf4f51;
     /** 
      * typography 
      */
