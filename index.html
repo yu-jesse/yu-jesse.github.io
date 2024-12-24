@@ -3,41 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio</title>
+    <title>Modern Portfolio</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 </head>
 <body>
-    <header>
-        <h1 class="animate__animated animate__fadeInDown">Welcome to My Portfolio</h1>
-    </header>
-    <section id="about">
-        <h2>About Me</h2>
-        <p>Hi, I'm [Your Name], a passionate web developer.</p>
-    </section>
-    <section id="projects">
-        <h2>Projects</h2>
-        <div class="project animate__animated animate__fadeInUp">
-            <h3>Project 1</h3>
-            <p>Description of project 1.</p>
-        </div>
-        <div class="project animate__animated animate__fadeInUp">
-            <h3>Project 2</h3>
-            <p>Description of project 2.</p>
-        </div>
-    </section>
-    <section id="skills">
-        <h2>Skills</h2>
-        <ul>
-            <li>HTML</li>
-            <li>CSS</li>
-            <li>JavaScript</li>
-            <li>React</li>
-        </ul>
-    </section>
-    <footer>
-        <p>Contact: [Your Email]</p>
-    </footer>
+    <div id="loader" class="loader"></div>
+    <div id="content" class="hidden">
+        <header>
+            <h1 class="animate__animated animate__fadeInDown">Welcome to My Portfolio</h1>
+        </header>
+        <section id="about">
+            <h2>About Me</h2>
+            <p>Hi, I'm [Your Name], a passionate web developer.</p>
+        </section>
+        <section id="projects">
+            <h2>Projects</h2>
+            <div class="project animate__animated animate__fadeInUp">
+                <h3>Project 1</h3>
+                <p>Description of project 1.</p>
+            </div>
+            <div class="project animate__animated animate__fadeInUp">
+                <h3>Project 2</h3>
+                <p>Description of project 2.</p>
+            </div>
+        </section>
+        <section id="skills">
+            <h2>Skills</h2>
+            <ul>
+                <li>HTML</li>
+                <li>CSS</li>
+                <li>JavaScript</li>
+                <li>React</li>
+            </ul>
+        </section>
+        <footer>
+            <p>Contact: [Your Email]</p>
+        </footer>
+    </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
     <script src="scripts.js"></script>
 </body>

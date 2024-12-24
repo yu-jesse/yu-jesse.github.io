@@ -2,7 +2,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #646464;
+    background-color: #f4f4f4;
     color: #333;
 }
 
@@ -36,4 +36,49 @@ footer {
     color: #fff;
     text-align: center;
     padding: 1rem 0;
+}
+
+.hidden {
+    display: none;
+}
+
+.loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loader::after {
+    content: '';
+    width: 40px;
+    height: 40px;
+    border: 5px solid #333;
+    border-top: 5px solid transparent;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+button, a {
+    transition: transform 0.3s ease;
+}
+
+button:hover, a:hover {
+    transform: scale(1.1);
+}
+
+body {
+    background: linear-gradient(135deg, #f4f4f4 25%, #e0e0e0 25%, #e0e0e0 50%, #f4f4f4 50%, #f4f4f4 75%, #e0e0e0 75%, #e0e0e0 100%);
+    background-size: 56.57px 56.57px;
 }
