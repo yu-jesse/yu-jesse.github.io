@@ -111,13 +111,35 @@ body {
 /*-----------------------------------*\
 #REUSEDSTYLE
 \*-----------------------------------*/
-.sidebar, article {
-    background: var(--eerie-black-2);
-    border: 1px solid var(--jet);
+/* Sidebar styles for larger screens */
+.sidebar {
+    width: 250px;
+    position: fixed;
+    top: 20px;
+    left: 20px;
     border-radius: 20px;
-    padding: 15px;
-    box-shadow: var(--shadow-1);
-    z-index: 1;
+    border: 1px solid #444;
+    margin-left: 20px;
+}
+
+/* Main content adjustment for sidebar */
+.main-content {
+    margin-left: 310px; /* Adjusted for sidebar width + margin */
+    padding: 20px;
+    flex-grow: 1;
+}
+
+/* Top navigation bar styles */
+.top-nav {
+    background-color: #2e2e2e;
+    padding: 10px;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    left: 310px; /* Adjusted for sidebar width + margin */
+    border-radius: 20px;
+    border: 1px solid #444;
+    z-index: 1000;
 }
 
 .separator {
