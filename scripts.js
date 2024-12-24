@@ -1,18 +1,19 @@
-// Dark mode toggle
-const toggleButton = document.getElementById('dark-mode-toggle');
-const body = document.body;
+document.addEventListener('DOMContentLoaded', () => {
+    const sections = document.querySelectorAll('section');
+    const options = {
+        threshold: 0.1
+    };
 
-toggleButton.addEventListener('click', () => {
-    body.classList.toggle('dark-mode');
-    // Save the user's preference in local storage
-    if (body.classList.contains('dark-mode')) {
-        localStorage.setItem('dark-mode', 'enabled');
-    } else {
-        localStorage.setItem('dark-mode', 'disabled');
-    }
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('fade-in');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, options);
+
+    sections.forEach(section => {
+        observer.observe(section);
+    });
 });
-
-// Check the user's preference on page load
-if (localStorage.getItem('dark-mode') === 'enabled') {
-    body.classList.add('dark-mode');
-}

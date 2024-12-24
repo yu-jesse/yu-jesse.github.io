@@ -2,113 +2,58 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #f4f4f4;
-    color: #333;
-    scroll-behavior: smooth;
-    transition: background-color 0.3s, color 0.3s;
-}
-
-body.dark-mode {
-    background-color: #333;
-    color: #f4f4f4;
+    background: #f4f4f4;
 }
 
 header {
-    background-color: #333;
+    background: #333;
     color: #fff;
     padding: 1rem 0;
     text-align: center;
-    position: fixed;
-    width: 100%;
-    top: 0;
-    z-index: 1000;
-    transition: background-color 0.3s;
-}
-
-body.dark-mode header {
-    background-color: #222;
 }
 
 nav ul {
     list-style: none;
     padding: 0;
-    margin: 0;
-    display: flex;
-    justify-content: center;
 }
 
 nav ul li {
+    display: inline;
     margin: 0 1rem;
 }
 
 nav ul li a {
     color: #fff;
     text-decoration: none;
-    font-size: 1.2rem;
-    transition: color 0.3s;
-}
-
-nav ul li a:hover {
-    color: #ff6347;
 }
 
 section {
-    padding: 6rem 2rem;
-    margin-top: 4rem;
-}
-
-#home {
-    background: url('background.jpg') no-repeat center center/cover;
-    color: #fff;
-    text-align: center;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-body.dark-mode #home {
-    background: url('background-dark.jpg') no-repeat center center/cover;
-}
-
-#about, #projects, #contact {
-    background-color: #fff;
-    color: #333;
-    transition: background-color 0.3s, color 0.3s;
-}
-
-body.dark-mode #about, body.dark-mode #projects, body.dark-mode #contact {
-    background-color: #444;
-    color: #f4f4f4;
+    padding: 2rem;
+    margin: 1rem 0;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .project {
-    background-color: #f9f9f9;
-    padding: 1rem;
-    margin: 1rem 0;
-    border-radius: 8px;
-    transition: transform 0.3s, background-color 0.3s;
+    margin-bottom: 1rem;
 }
 
-body.dark-mode .project {
-    background-color: #555;
+h1, h2, h3 {
+    margin: 0 0 1rem 0;
 }
 
-.project:hover {
-    transform: scale(1.05);
+p {
+    margin: 0 0 1rem 0;
 }
 
-footer {
-    background-color: #333;
-    color: #fff;
-    text-align: center;
-    padding: 1rem 0;
-    position: fixed;
-    width: 100%;
-    bottom: 0;
-    transition: background-color 0.3s;
+section {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
 }
 
-body.dark-mode footer {
-    background-color: #222;
+section.fade-in {
+    opacity: 1;
+    transform: translateY(0);
 }
