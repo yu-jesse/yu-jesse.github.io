@@ -37,34 +37,34 @@
      * typography 
      */
     /* font-family */
-    --ff-poppins: {{ ff_poppins }};
+    --ff-poppins: 'Poppins', sans-serif;
     /* font-size */
-    --fs-1: {{ fs_1 }};
-    --fs-2: {{ fs_2 }};
-    --fs-3: {{ fs_3 }};
-    --fs-4: {{ fs_4 }};
-    --fs-5: {{ fs_5 }};
-    --fs-6: {{ fs_6 }};
-    --fs-7: {{ fs_7 }};
-    --fs-8: {{ fs_8 }};
+    --fs-1: 24px;
+    --fs-2: 18px;
+    --fs-3: 17px;
+    --fs-4: 16px;
+    --fs-5: 15px;
+    --fs-6: 14px;
+    --fs-7: 13px;
+    --fs-8: 11px;
     /* font-weight */
-    --fw-300: {{ fw_300 }};
-    --fw-400: {{ fw_400 }};
-    --fw-500: {{ fw_500 }};
-    --fw-600: {{ fw_600 }};
+    --fw-300: 300;
+    --fw-400: 400;
+    --fw-500: 500;
+    --fw-600: 600;
     /** 
      * shadow 
      */
-    --shadow-1: {{ shadow_1 }};
-    --shadow-2: {{ shadow_2 }};
-    --shadow-3: {{ shadow_3 }};
-    --shadow-4: {{ shadow_4 }};
-    --shadow-5: {{ shadow_5 }};
+    --shadow-1: -4px 8px 24px hsla(0, 0%, 0%, 0.25);
+    --shadow-2: 0 16px 30px hsla(0, 0%, 0%, 0.25);
+    --shadow-3: 0 16px 40px hsla(0, 0%, 0%, 0.25);
+    --shadow-4: 0 25px 50px hsla(0, 0%, 0%, 0.15);
+    --shadow-5: 0 24px 80px hsla(0, 0%, 0%, 0.25);
     /** 
      * transition 
      */
-    --transition-1: {{ transition_1 }};
-    --transition-2: {{ transition_2 }};
+    --transition-1: 0.25s ease;
+    --transition-2: 0.5s ease-in-out;
 }
 
 /*-----------------------------------*\
@@ -1583,7 +1583,7 @@ textarea.form-input::-webkit-resizer {
 /** 
  * responsive larger than 768px screen 
  */
-@media (min-width: 768px) {
+ @media (min-width: 768px) {
     /** 
      * REUSEDSTYLE 
      */
