@@ -1,19 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const sections = document.querySelectorAll('section');
-    const options = {
-        threshold: 0.1
-    };
-
-    const observer = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('fade-in');
-                observer.unobserve(entry.target);
-            }
-        });
-    }, options);
-
-    sections.forEach(section => {
-        observer.observe(section);
+    anime({
+        targets: '.project',
+        translateY: [-50, 0],
+        opacity: [0, 1],
+        delay: anime.stagger(200, {start: 500}),
+        easing: 'easeOutExpo'
     });
 });
