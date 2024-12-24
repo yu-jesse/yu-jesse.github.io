@@ -19,6 +19,7 @@ body {
     left: 20px;
     border-radius: 10px;
     border: 1px solid #444;
+    margin-left: 20px; /* Added margin from the left */
 }
 
 .profile-image {
@@ -41,7 +42,7 @@ body {
 }
 
 .main-content {
-    margin-left: 290px; /* Adjusted for sidebar width + margin */
+    margin-left: 310px; /* Adjusted for sidebar width + margin */
     padding: 20px;
     flex-grow: 1;
 }
@@ -52,7 +53,7 @@ body {
     position: fixed;
     top: 20px;
     right: 20px;
-    left: 290px; /* Adjusted for sidebar width + margin */
+    left: 310px; /* Adjusted for sidebar width + margin */
     border-radius: 10px;
     border: 1px solid #444;
     z-index: 1000;
