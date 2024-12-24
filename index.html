@@ -5,17 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Portfolio</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap">
 </head>
 <body>
     <div class="container">
         <aside class="sidebar">
-            <img src="profile.jpg" alt="Profile Image" class="profile-image">
-            <h2>Full Name</h2>
-            <p>Job Title</p>
-            <p>Email: <a href="mailto:email@example.com">email@example.com</a></p>
-            <p>Phone: <a href="tel:+1234567890">+1234567890</a></p>
-            <p>LinkedIn: <a href="https://linkedin.com/in/username" target="_blank">LinkedIn Profile</a></p>
-            <p>Location: City, Country</p>
+            <div class="sidebar-info">
+                <figure class="avatar-box">
+                    <img src="profile.jpg" alt="Profile Image" width="80">
+                </figure>
+                <div class="info-content">
+                    <h1 class="name">Full Name</h1>
+                    <p class="title">Job Title</p>
+                </div>
+                <div class="contacts">
+                    <p>Email: <a href="mailto:email@example.com">email@example.com</a></p>
+                    <p>Phone: <a href="tel:+1234567890">+1234567890</a></p>
+                    <p>LinkedIn: <a href="https://linkedin.com/in/username" target="_blank">LinkedIn Profile</a></p>
+                    <p>Location: City, Country</p>
+                </div>
+            </div>
         </aside>
         <main class="main-content">
             <nav class="top-nav">
