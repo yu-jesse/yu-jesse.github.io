@@ -15,7 +15,10 @@ body {
     padding: 20px;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
     position: fixed;
-    height: 100%;
+    top: 20px;
+    left: 20px;
+    border-radius: 10px;
+    border: 1px solid #444;
 }
 
 .profile-image {
@@ -38,7 +41,7 @@ body {
 }
 
 .main-content {
-    margin-left: 250px;
+    margin-left: 290px; /* Adjusted for sidebar width + margin */
     padding: 20px;
     flex-grow: 1;
 }
@@ -46,8 +49,12 @@ body {
 .top-nav {
     background-color: #2e2e2e;
     padding: 10px;
-    position: sticky;
-    top: 0;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    left: 290px; /* Adjusted for sidebar width + margin */
+    border-radius: 10px;
+    border: 1px solid #444;
     z-index: 1000;
 }
 
