@@ -1294,7 +1294,7 @@ textarea.form-input::-webkit-resizer { display: none; }
    */
 
   .sidebar, article {
-    width: 520px;
+    width: 540px;
     margin-inline: auto;
     padding: 30px;
   }
@@ -1344,7 +1344,10 @@ textarea.form-input::-webkit-resizer { display: none; }
 
   .avatar-box { border-radius: 25x; }
 
-  .avatar-box img { width: 120px; }
+  .avatar-box img { 
+    width: 120px; 
+    border-radius: 7px;
+  }
 
   .info-content .name { margin-bottom: 15px; }
 
