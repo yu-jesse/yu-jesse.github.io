@@ -579,7 +579,7 @@ main {
 }
 
 .hobbies-item {
-  min-width: 100%;
+  min-width: 150%;
   scroll-snap-align: center;
 }
 
@@ -604,7 +604,7 @@ main {
   line-clamp: 4;
   -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
-  overflow: hidden;
+  overflow: scroll;
 }
 
 
@@ -1432,7 +1432,7 @@ textarea.form-input::-webkit-resizer { display: none; }
   }
 
   .hobbies-avatar-box img { 
-    width: 40px; 
+    width: 60px; 
     margin: 10px;
   }
 
