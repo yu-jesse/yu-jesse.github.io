@@ -1853,7 +1853,7 @@ textarea.form-input::-webkit-resizer { display: none; }
 
   .sidebar-info { flex-direction: column; }
 
-  .avatar-box img { width: 100px; }
+  .avatar-box img { width: auto; }
 
   .info-content .name {
     white-space: nowrap;
