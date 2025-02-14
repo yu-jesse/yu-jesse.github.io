@@ -1431,7 +1431,10 @@ textarea.form-input::-webkit-resizer { display: none; }
     border-radius: 20px;
   }
 
-  .hobbies-avatar-box img { width: 80px; }
+  .hobbies-avatar-box img { 
+    width: 80px; 
+    margin: 10px;
+  }
 
   .hobbies-item-title {
     margin-bottom: 10px;
@@ -1439,8 +1442,8 @@ textarea.form-input::-webkit-resizer { display: none; }
   }
 
   .hobbies-text {
-    line-clamp: 2;
-    -webkit-line-clamp: 2;
+    line-clamp: 6;
+    -webkit-line-clamp: 6;
   }
 
   /* hobbies modal */
