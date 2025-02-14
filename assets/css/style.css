@@ -867,6 +867,9 @@ main {
   border-radius: inherit;
 }
 
+.skill:nth-of-type(2) .skills-title {
+  margin-top: 40px;
+}
 
 
 
