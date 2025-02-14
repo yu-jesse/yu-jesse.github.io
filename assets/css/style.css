@@ -1442,8 +1442,8 @@ textarea.form-input::-webkit-resizer { display: none; }
   }
 
   .hobbies-text {
-    line-clamp: 6;
-    -webkit-line-clamp: 6;
+    line-clamp: 10;
+    -webkit-line-clamp: 10
   }
 
   /* hobbies modal */
