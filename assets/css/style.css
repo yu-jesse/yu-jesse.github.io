@@ -1342,6 +1342,21 @@ textarea.form-input::-webkit-resizer { display: none; }
 
   .sidebar-info { gap: 25px; }
 
+  .avatar-box {
+    background: var(--bg-gradient-onyx);
+    border-radius: 17px;
+    width: 200px; 
+    height: 200px; 
+    overflow: hidden;
+  }
+  
+  .avatar-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 17px;
+  }
+
   @media (min-width: 580px) {
 
     .avatar-box { 
