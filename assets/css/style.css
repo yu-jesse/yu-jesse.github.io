@@ -942,6 +942,7 @@ main {
   transition: opacity 0.5s ease, transform 0.5s ease;
   opacity: 0;
   transform: scale(0.95);
+  display: none;
 }
 
 .project-item.active {
