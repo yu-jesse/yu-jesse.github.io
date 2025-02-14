@@ -1342,10 +1342,13 @@ textarea.form-input::-webkit-resizer { display: none; }
 
   .sidebar-info { gap: 25px; }
 
-  .avatar-box { border-radius: 25x; }
+  .avatar-box { 
+    border-radius: 25x; 
+    width: 300px;
+  }
 
   .avatar-box img { 
-    width: 250px; 
+    width: 100%; 
     border-radius: 7px;
   }
 
