@@ -871,7 +871,7 @@ main {
 
 
 /*-----------------------------------*\
-  #PORTFOLIO
+  #COURSES
 \*-----------------------------------*/
 
 .filter-list { display: none; }
@@ -945,6 +945,7 @@ main {
 }
 
 .project-item.active {
+  opacity: 1;
   display: block;
   animation: scaleUp 0.25s ease forwards;
 }
@@ -1034,7 +1035,7 @@ main {
 
 
 /*-----------------------------------*\
-  #BLOG
+  #PROJECTS
 \*-----------------------------------*/
 
 .blog-posts { margin-bottom: 10px; }
