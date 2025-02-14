@@ -838,8 +838,7 @@ main {
 
 .skills-list { padding: 20px; }
 
-
-.skills-item:not(:last-child) { margin-bottom: 15px; }
+.skills-item:not(:last-child) { margin-bottom: 30px; }
 
 .skill .title-wrapper {
   display: flex;
@@ -866,11 +865,6 @@ main {
   height: 100%;
   border-radius: inherit;
 }
-
-.skill:nth-of-type(2) .skills-title {
-  margin-top: 200px; /* Adjust the value as needed */
-}
-
 
 
 /*-----------------------------------*\
