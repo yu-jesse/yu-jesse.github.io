@@ -1345,8 +1345,8 @@ textarea.form-input::-webkit-resizer { display: none; }
   .avatar-box {
     background: var(--bg-gradient-onyx);
     border-radius: 17px;
-    width: 200px; 
-    height: 200px; 
+    width: 200px; /* Adjust the value as needed */
+    height: 200px; /* Adjust the value as needed */
     overflow: hidden;
   }
   
@@ -1354,23 +1354,19 @@ textarea.form-input::-webkit-resizer { display: none; }
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 17px;
+    border-radius: 17px; /* Ensure the image has rounded corners */
   }
-
+  
   @media (min-width: 580px) {
-
-    .avatar-box { 
-      border-radius: 25x; 
-      width: 200px;
-      height: 200px;
-      overflow: hidden;
+    
+    .avatar-box {
+      border-radius: 25px; /* Adjust the value as needed */
+      width: 200px; /* Adjust the value as needed */
+      height: 200px; /* Adjust the value as needed */
     }
-
-    .avatar-box img { 
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 17px;
+  
+    .avatar-box img {
+      border-radius: 25px; /* Ensure the image has rounded corners */
     }
   }
 
