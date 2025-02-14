@@ -1344,8 +1344,8 @@ textarea.form-input::-webkit-resizer { display: none; }
 
   .avatar-box { 
     border-radius: 25x; 
-    width: 300px;
-    height: 300px;
+    width: 200px;
+    height: 200px;
     overflow: hidden;
   }
 
