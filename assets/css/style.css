@@ -838,7 +838,7 @@ main {
 
 .skills-list { 
   padding: 20px;
-  margin-bottom: 30px;
+  margin-bottom: 15px;
 }
 
 .skills-item:not(:last-child) { margin-bottom: 15px; }
