@@ -924,7 +924,7 @@ main {
   line-height: 1.6;
 }
 
-/* .filter-list { display: none; }
+.filter-list { display: none; }
 
 .filter-select-box {
   position: relative;
@@ -979,7 +979,7 @@ main {
   border-radius: 7px;
 }
 
-.select-item button:hover { --eerie-black-2: hsl(240, 2%, 20%); } */
+.select-item button:hover { --eerie-black-2: hsl(240, 2%, 20%); }
 
 
 /* .course-list {
