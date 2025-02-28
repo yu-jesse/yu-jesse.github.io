@@ -165,8 +165,7 @@ body { background: var(--smoky-black); }
   #REUSED STYLE
 \*-----------------------------------*/
 
-.sidebar,
-article {
+.sidebar, article {
   background: var(--eerie-black-2);
   border: 1px solid var(--jet);
   border-radius: 17px;
@@ -315,6 +314,7 @@ main {
 \*-----------------------------------*/
 
 .sidebar {
+  width: 450px;
   margin-bottom: 15px;
   max-height: 112px;
   overflow: hidden;
