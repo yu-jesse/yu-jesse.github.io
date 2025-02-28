@@ -314,7 +314,6 @@ main {
 \*-----------------------------------*/
 
 .sidebar {
-  width: 450px;
   margin-bottom: 15px;
   max-height: 112px;
   overflow: hidden;
@@ -334,25 +333,6 @@ main {
 .avatar-box {
   background: var(--bg-gradient-onyx);
   border-radius: 17px;
-}
-
-/* Styles for larger screens */
-@media (min-width: 768px) {
-  .sidebar {
-    width: 300px; /* Adjust the value as needed */
-  }
-}
-
-@media (min-width: 1024px) {
-  .sidebar {
-    width: 450px; /* Adjust the value as needed */
-  }
-}
-
-@media (min-width: 1250px) {
-  .sidebar {
-    width: 4500px; /* Adjust the value as needed */
-  }
 }
 
 .info-content .name {
@@ -1067,10 +1047,12 @@ main {
 .course-list-items {
   list-style: none;
   padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
 }
 
 .course-item {
-  margin-bottom: 20px;
   padding: 15px;
   background: var(--eerie-black-2);
   border: 1px solid var(--jet);
@@ -1088,6 +1070,19 @@ main {
   font-size: var(--fs-6);
   color: var(--light-gray);
   line-height: 1.6;
+}
+
+/* Responsive styles for larger screens */
+@media (min-width: 768px) {
+  .course-list-items {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (min-width: 1024px) {
+  .course-list-items {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
 }
 
 /* .blog-posts { margin-bottom: 10px; }
