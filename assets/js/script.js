@@ -154,3 +154,16 @@ for (let i = 0; i < navigationLinks.length; i++) {
 
   });
 }
+
+// Retrieve the last selected page from localStorage
+const lastSelectedPage = localStorage.getItem("lastSelectedPage") || "projects";
+showPage(lastSelectedPage);
+
+// add event to all nav link
+for (let i = 0; i < navigationLinks.length; i++) {
+  navigationLinks[i].addEventListener("click", function () {
+    const selectedPage = this.innerHTML.toLowerCase();
+    showPage(selectedPage);
+    localStorage.setItem("lastSelectedPage", selectedPage);
+  });
+}
