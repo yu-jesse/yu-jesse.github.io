@@ -336,6 +336,25 @@ main {
   border-radius: 17px;
 }
 
+/* Styles for larger screens */
+@media (min-width: 768px) {
+  .sidebar {
+    width: 300px; /* Adjust the value as needed */
+  }
+}
+
+@media (min-width: 1024px) {
+  .sidebar {
+    width: 350px; /* Adjust the value as needed */
+  }
+}
+
+@media (min-width: 1250px) {
+  .sidebar {
+    width: 400px; /* Adjust the value as needed */
+  }
+}
+
 .info-content .name {
   color: var(--white-2);
   font-size: var(--fs-3);
