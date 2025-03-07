@@ -884,21 +884,25 @@ main {
 }
 
 .skills-item {
-  margin-bottom: 10px;
+  margin-bottom: 8px; /* Adjust the spacing between each skill item */
 }
 
 .skills-item h4 {
   font-size: var(--fs-4);
   color: var(--white-2);
-  margin-bottom: 3px;
+  margin-bottom: 5px; /* Adjust the spacing below the skill header */
 }
 
 .skills-item p {
   font-size: var(--fs-6);
   color: var(--light-gray);
-  line-height: 1.4;
+  line-height: 1.4; /* Adjust the line height for the skill description */
+  margin-bottom: 0px; /* Adjust the spacing below the skill description */
 }
 
+.skills-title {
+  margin-bottom: 20px; /* Adjust the spacing below the main category header */
+}
 
 
 
