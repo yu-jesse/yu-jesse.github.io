@@ -888,6 +888,17 @@ main {
   padding: 0;
 }
 
+.skills-title {
+  margin-bottom: 20px; /* Adjust the spacing below the main category header */
+}
+
+.divider {
+  width: 100%;
+  height: 1px;
+  background: var(--jet);
+  margin: 16px 0;
+}
+
 .skills-item {
   display: flex;
   justify-content: space-between;
@@ -923,10 +934,6 @@ main {
   content: "Icon"; /* Placeholder text */
   color: var(--light-gray);
   font-size: var(--fs-7);
-}
-
-.skills-title {
-  margin-bottom: 20px; /* Adjust the spacing below the main category header */
 }
 
 
