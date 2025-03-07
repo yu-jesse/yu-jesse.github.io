@@ -950,6 +950,7 @@ main {
 
   .skills-item p {
     font-size: var(--fs-7); /* Adjust font size for smaller screens */
+    margin-top: 5px; /* Add some spacing above the description */
   }
 
   .skill-icon-placeholder {
@@ -958,6 +959,25 @@ main {
   }
 }
 
+/* Additional responsive styles for very small screens */
+@media (max-width: 480px) {
+  .skills-item {
+    padding: 10px; /* Add padding for better spacing */
+  }
+
+  .skills-item h4 {
+    font-size: var(--fs-6); /* Further adjust font size for very small screens */
+  }
+
+  .skills-item p {
+    font-size: var(--fs-8); /* Further adjust font size for very small screens */
+  }
+
+  .skill-icon-placeholder {
+    width: 30px; /* Adjust the size for very small screens */
+    height: 30px; /* Adjust the size for very small screens */
+  }
+}
 
 
 /*-----------------------------------*\
