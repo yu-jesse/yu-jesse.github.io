@@ -875,6 +875,11 @@ main {
 \*-----------------------------------*/
 
 .skill-category {
+  padding: 15px;
+  background: var(--eerie-black-2);
+  border: 1px solid var(--jet);
+  border-radius: 12px;
+  box-shadow: var(--shadow-1);
   margin-bottom: 30px;
 }
 
@@ -884,11 +889,9 @@ main {
 }
 
 .skills-item {
-  padding: 15px;
-  background: var(--eerie-black-2);
-  border: 1px solid var(--jet);
-  border-radius: 12px;
-  box-shadow: var(--shadow-1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 8px; /* Adjust the spacing between each skill item */
 }
 
@@ -903,6 +906,23 @@ main {
   color: var(--light-gray);
   line-height: 1.4; /* Adjust the line height for the skill description */
   margin-bottom: 0px; /* Adjust the spacing below the skill description */
+}
+
+.skill-icon-placeholder {
+  width: 40px; /* Adjust the size as needed */
+  height: 40px; /* Adjust the size as needed */
+  background: var(--eerie-black-1);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: var(--shadow-1);
+}
+
+.skill-icon-placeholder::before {
+  content: "Icon"; /* Placeholder text */
+  color: var(--light-gray);
+  font-size: var(--fs-7);
 }
 
 .skills-title {
