@@ -1958,3 +1958,34 @@ textarea.form-input::-webkit-resizer { display: none; }
   .timeline-text { max-width: 700px; }
 
 }
+
+
+/* CREDITS */
+
+.credits {
+  background: var(--eerie-black-2);
+  color: var(--light-gray);
+  padding: 20px 0;
+  text-align: center;
+  border-top: 1px solid var(--jet);
+}
+
+.credits .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.credits p {
+  margin: 5px 0;
+  font-size: var(--fs-6);
+}
+
+.credits a {
+  color: var(--orange-yellow-crayola);
+  text-decoration: none;
+}
+
+.credits a:hover {
+  text-decoration: underline;
+}
