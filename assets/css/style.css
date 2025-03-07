@@ -884,19 +884,19 @@ main {
 }
 
 .skills-item {
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 
 .skills-item h4 {
   font-size: var(--fs-4);
   color: var(--white-2);
-  margin-bottom: 5px;
+  margin-bottom: 3px;
 }
 
 .skills-item p {
   font-size: var(--fs-6);
   color: var(--light-gray);
-  line-height: 1.6;
+  line-height: 1.4;
 }
 
 
