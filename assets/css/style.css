@@ -869,6 +869,39 @@ main {
 }
 
 
+
+/*-----------------------------------*\
+  #SKILLS
+\*-----------------------------------*/
+
+.skill-category {
+  margin-bottom: 30px;
+}
+
+.skills-list {
+  list-style: none;
+  padding: 0;
+}
+
+.skills-item {
+  margin-bottom: 15px;
+}
+
+.skills-item h4 {
+  font-size: var(--fs-4);
+  color: var(--white-2);
+  margin-bottom: 5px;
+}
+
+.skills-item p {
+  font-size: var(--fs-6);
+  color: var(--light-gray);
+  line-height: 1.6;
+}
+
+
+
+
 /*-----------------------------------*\
   #PROJECTS
 \*-----------------------------------*/
