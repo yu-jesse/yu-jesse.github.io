@@ -880,7 +880,7 @@ main {
   border: 1px solid var(--jet);
   border-radius: 12px;
   box-shadow: var(--shadow-1);
-  margin-bottom: 30px;
+  margin-bottom: 15px;
 }
 
 .skills-list {
@@ -917,6 +917,7 @@ main {
   color: var(--light-gray);
   line-height: 1.4; /* Adjust the line height for the skill description */
   margin-bottom: 0px; /* Adjust the spacing below the skill description */
+  flex: 1 1 100%; /* Allow the description to take full width on smaller screens */
 }
 
 .skill-icon-placeholder {
@@ -928,12 +929,34 @@ main {
   justify-content: center;
   align-items: center;
   box-shadow: var(--shadow-1);
+  margin-left: 10px; /* Add some spacing between the description and the icon */
 }
 
 .skill-icon-placeholder::before {
   content: "Icon"; /* Placeholder text */
   color: var(--light-gray);
   font-size: var(--fs-7);
+}
+
+/* Responsive styles for smaller screens */
+@media (max-width: 768px) {
+  .skills-item {
+    flex-direction: column; /* Stack items vertically on smaller screens */
+    align-items: flex-start; /* Align items to the start */
+  }
+
+  .skills-item h4 {
+    font-size: var(--fs-5); /* Adjust font size for smaller screens */
+  }
+
+  .skills-item p {
+    font-size: var(--fs-7); /* Adjust font size for smaller screens */
+  }
+
+  .skill-icon-placeholder {
+    margin-top: 10px; /* Add some spacing above the icon */
+    margin-left: 0; /* Remove left margin */
+  }
 }
 
 
