@@ -930,12 +930,6 @@ main {
   box-shadow: var(--shadow-1);
 }
 
-.skill-icon-placeholder::before {
-  content: "Icon"; /* Placeholder text */
-  color: var(--light-gray);
-  font-size: var(--fs-7);
-}
-
 /* Responsive styles for smaller screens */
 @media (max-width: 768px) {
   .skills-item {
