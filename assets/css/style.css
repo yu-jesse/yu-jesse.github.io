@@ -1962,33 +1962,37 @@ textarea.form-input::-webkit-resizer { display: none; }
 
 /* CREDITS */
 
-.credits {
+.credits-list {
+  margin-bottom: 30px;
+}
+
+.credits-list-items {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.credits-item {
+  padding: 15px;
   background: var(--eerie-black-2);
-  color: var(--light-gray);
-  padding: 20px 0;
-  text-align: center;
-  border-top: 1px solid var(--jet);
+  border: 1px solid var(--jet);
+  border-radius: 12px;
   box-shadow: var(--shadow-1);
-  border-radius: 0 0 17px 17px;
-  margin-top: 30px;
 }
 
-.credits .container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
-}
-
-.credits p {
-  margin: 5px 0;
+.credits-item p {
   font-size: var(--fs-6);
+  color: var(--light-gray);
+  line-height: 1.6;
 }
 
-.credits a {
+.credits-item a {
   color: var(--orange-yellow-crayola);
   text-decoration: none;
 }
 
-.credits a:hover {
+.credits-item a:hover {
   text-decoration: underline;
 }
