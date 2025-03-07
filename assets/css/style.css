@@ -1968,6 +1968,9 @@ textarea.form-input::-webkit-resizer { display: none; }
   padding: 20px 0;
   text-align: center;
   border-top: 1px solid var(--jet);
+  box-shadow: var(--shadow-1);
+  border-radius: 0 0 17px 17px;
+  margin-top: 30px;
 }
 
 .credits .container {
