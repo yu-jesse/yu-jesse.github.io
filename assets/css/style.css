@@ -889,7 +889,7 @@ main {
 }
 
 .skills-title {
-  margin-bottom: 20px; /* Adjust the spacing below the main category header */
+  margin-bottom: 10px; /* Adjust the spacing below the main category header */
 }
 
 .divider {
@@ -904,12 +904,14 @@ main {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 8px; /* Adjust the spacing between each skill item */
+  flex-wrap: wrap; /* Allow items to wrap to the next line */
 }
 
 .skills-item h4 {
   font-size: var(--fs-4);
   color: var(--white-2);
   margin-bottom: 5px; /* Adjust the spacing below the skill header */
+  flex: 1; /* Allow the header to take up the full width */
 }
 
 .skills-item p {
@@ -917,6 +919,7 @@ main {
   color: var(--light-gray);
   line-height: 1.4; /* Adjust the line height for the skill description */
   margin-bottom: 0px; /* Adjust the spacing below the skill description */
+  flex: 1 1 100%; /* Allow the description to take up the full width */
 }
 
 .skill-icon-placeholder {
@@ -928,6 +931,7 @@ main {
   justify-content: center;
   align-items: center;
   box-shadow: var(--shadow-1);
+  margin-left: 10px; /* Add some spacing between the icon and the text */
 }
 
 .skill-icon-placeholder::before {
@@ -939,22 +943,23 @@ main {
 /* Responsive styles for smaller screens */
 @media (max-width: 768px) {
   .skills-item {
-    flex-direction: column; /* Stack items vertically on smaller screens */
-    align-items: flex-start; /* Align items to the start */
+    flex-direction: row; /* Stack items vertically on smaller screens */
+    align-items: center; /* Align items to the start */
   }
 
   .skills-item h4 {
     font-size: var(--fs-5); /* Adjust font size for smaller screens */
+    margin-bottom: 0; /* Remove the spacing below the skill header */
   }
 
   .skills-item p {
     font-size: var(--fs-7); /* Adjust font size for smaller screens */
     margin-top: 5px; /* Add some spacing above the description */
+    flex: 1 1 100%; /* Allow the description to take up the full width */
   }
 
   .skill-icon-placeholder {
-    margin-top: 10px; /* Add some spacing above the icon */
-    margin-left: 0; /* Remove left margin */
+    margin-left: 10; /* Add some spacing between the icon and the text */
   }
 }
 
