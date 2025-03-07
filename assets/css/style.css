@@ -884,6 +884,11 @@ main {
 }
 
 .skills-item {
+  padding: 15px;
+  background: var(--eerie-black-2);
+  border: 1px solid var(--jet);
+  border-radius: 12px;
+  box-shadow: var(--shadow-1);
   margin-bottom: 8px; /* Adjust the spacing between each skill item */
 }
 
