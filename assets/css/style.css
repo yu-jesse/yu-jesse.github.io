@@ -916,7 +916,7 @@ main {
 .skills-item p {
   font-size: var(--fs-6);
   color: var(--light-gray);
-  line-height: 1.4; /* Adjust the line height for the skill description */
+  line-height: 1.0; /* Adjust the line height for the skill description */
   margin-bottom: 0px; /* Adjust the spacing below the skill description */
 }
 
