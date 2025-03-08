@@ -903,6 +903,7 @@ main {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-right: 5px;
   margin-bottom: 8px; /* Adjust the spacing between each skill item */
 }
 
@@ -925,7 +926,7 @@ main {
 }
 
 .skill-icon-placeholder {
-  display: flex;
+  display: none;
 }
 
 /* Responsive styles for smaller screens */
