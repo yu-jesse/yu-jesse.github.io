@@ -300,6 +300,10 @@ article.active {
 \*-----------------------------------*/
 
 main {
+  display: flex;
+  justify-content: flex-start; /* Align items to the start */
+  align-items: stretch;
+  gap: 25px;
   margin: 15px 12px;
   margin-bottom: 75px;
   min-width: 259px;
@@ -312,6 +316,17 @@ main {
 /*-----------------------------------*\
   #SIDEBAR
 \*-----------------------------------*/
+
+.sidebar {
+  position: sticky;
+  top: 60px;
+  max-height: max-content;
+  height: 100%;
+  margin-bottom: 0;
+  padding-top: 60px;
+  z-index: 1;
+  width: 280px; /* Adjust the width as needed */
+}
 
 .sidebar {
   margin-bottom: 15px;
@@ -1042,14 +1057,23 @@ main {
 }
 
 .project-images img {
-  width: 100%;
+  width: 400px;
   height: auto;
   border-radius: 12px;
   box-shadow: var(--shadow-1);
   cursor: pointer;
 }
 
-.project-images img:hover {
+.project-images video {
+  width: 400px;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: var(--shadow-1);
+  cursor: pointer;
+}
+
+.project-images img:hover,
+.project-images video:hover {
   opacity: 0.8;
 }
 
@@ -1087,14 +1111,14 @@ main {
 .project-description-summary {
   font-size: var(--fs-6);
   color: var(--light-gray);
-  line-height: 1.6;
+  line-height: 2.6;
   margin-bottom: 10px;
 }
 
 .project-description {
   font-size: var(--fs-6);
   color: var(--light-gray);
-  line-height: 1.4;
+  line-height: 2.0;
   list-style-type: disc;
 }
 
@@ -1261,7 +1285,7 @@ main {
 
 .course-description {
   font-size: var(--fs-6);
-  color: var(--light-gray);
+  color: var (--light-gray);
   line-height: 1.6;
 }
 
@@ -2079,7 +2103,7 @@ textarea.form-input::-webkit-resizer { display: none; }
    */
 
   main {
-    max-width: 1400px;
+    max-width: 1500px;
     margin-inline: auto;
     display: flex;
     justify-content: center;
@@ -2194,4 +2218,27 @@ textarea.form-input::-webkit-resizer { display: none; }
 
 .credits-item a:hover {
   text-decoration: underline;
+}
+
+/* Adjust the main content */
+.main-content {
+  flex-grow: 1; /* Allow the main content to grow */
+  width: calc(100% - 320px); /* Adjust the width to account for the sidebar */
+  margin: 0;
+  border-radius: 17px;
+  box-shadow: var(--shadow-1);
+  z-index: 1;
+}
+
+/* Responsive styles for larger screens */
+@media (min-width: 1250px) {
+  main {
+    max-width: 1500px;
+    margin-inline: auto;
+  }
+
+  .main-content {
+    min-width: 75%;
+    width: 75%;
+  }
 }

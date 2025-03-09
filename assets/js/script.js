@@ -196,3 +196,19 @@ modalImage.addEventListener("click", closeModal);
 
 // Call filterFunc with the default filter value on initial load
 filterFunc("all");
+
+// Function to set the playback speed for all videos based on their data attribute
+const setPlaybackSpeed = function () {
+  const projectVideos = document.querySelectorAll(".project-images video");
+  projectVideos.forEach((video) => {
+    const playbackSpeed = video.getAttribute("data-playback-speed");
+    if (playbackSpeed) {
+      video.playbackRate = parseFloat(playbackSpeed);
+    }
+  });
+};
+
+// Set the default playback speed when the page loads
+document.addEventListener("DOMContentLoaded", function () {
+  setPlaybackSpeed();
+});
