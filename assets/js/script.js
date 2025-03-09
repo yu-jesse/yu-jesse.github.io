@@ -12,7 +12,10 @@ sidebarBtn.addEventListener("click", function () { elementToggleFunc(sidebar); }
 
 // hobbies variables
 const hobbiesItem = document.querySelectorAll("[data-hobbies-item]");
+
+// modal variables
 const modalContainer = document.querySelector("[data-modal-container]");
+const modalImage = document.querySelector("[data-modal-image]");
 const modalCloseBtn = document.querySelector("[data-modal-close-btn]");
 const overlay = document.querySelector("[data-overlay]");
 
@@ -64,18 +67,29 @@ for (let i = 0; i < selectItems.length; i++) {
 const filterItems = document.querySelectorAll("[data-filter-item]");
 
 const filterFunc = function (selectedValue) {
-  for (let i = 0; i < filterItems.length; i++) {
-    // Temporarily remove the active class to force reflow
-    filterItems[i].classList.remove("active");
-    void filterItems[i].offsetWidth; // Trigger reflow
+  let projectList = document.querySelector(".project-list");
+  projectList.innerHTML = ""; // Clear the project list
 
-    if (selectedValue === "all") {
-      filterItems[i].classList.add("active");
-    } else if (selectedValue === filterItems[i].dataset.category) {
-      filterItems[i].classList.add("active");
+  let filteredItems = Array.from(filterItems).filter(item => 
+    selectedValue === "all" || selectedValue === item.dataset.category
+  );
+
+  filteredItems.forEach((item, index) => {
+    item.classList.add("active");
+    if (index % 2 !== 0) {
+      item.querySelector(".project-content").classList.add("reverse");
+    } else {
+      item.querySelector(".project-content").classList.remove("reverse");
     }
-  }
-}
+    projectList.appendChild(item);
+
+    if (index < filteredItems.length - 1) {
+      let divider = document.createElement("li");
+      divider.classList.add("divider");
+      projectList.appendChild(divider);
+    }
+  });
+};
 
 // add event in all filter button items for large screen
 let lastClickedBtn = filterBtn[0];
@@ -83,12 +97,25 @@ let lastClickedBtn = filterBtn[0];
 for (let i = 0; i < filterBtn.length; i++) {
   filterBtn[i].addEventListener("click", function () {
     let selectedValue = this.innerText.toLowerCase();
-    selectValue.innerText = this.innerText;
     filterFunc(selectedValue);
 
     lastClickedBtn.classList.remove("active");
     this.classList.add("active");
     lastClickedBtn = this;
+  });
+}
+
+// add event in all select items for small screen
+select.addEventListener("click", function () {
+  this.classList.toggle("active");
+});
+
+for (let i = 0; i < selectItems.length; i++) {
+  selectItems[i].addEventListener("click", function () {
+    let selectedValue = this.innerText.toLowerCase();
+    selectValue.innerText = this.innerText;
+    filterFunc(selectedValue);
+    select.classList.remove("active");
   });
 }
 
@@ -139,3 +166,33 @@ for (let i = 0; i < navigationLinks.length; i++) {
     localStorage.setItem("lastSelectedPage", selectedPage);
   });
 }
+
+// Function to open the modal with the clicked image
+const openModal = function (src, alt) {
+  modalImage.src = src;
+  modalImage.alt = alt;
+  modalContainer.classList.add("active");
+  modalImage.style.cursor = "pointer"; // Change cursor to zoom-out
+};
+
+// Function to close the modal
+const closeModal = function () {
+  modalContainer.classList.remove("active");
+  modalImage.style.cursor = "pointer"; // Change cursor back to zoom-in
+};
+
+// Add click event to all project images
+const projectImages = document.querySelectorAll(".project-images img");
+projectImages.forEach((img) => {
+  img.addEventListener("click", function () {
+    openModal(this.src, this.alt);
+  });
+});
+
+// Add click event to close button, overlay, and modal image
+modalCloseBtn.addEventListener("click", closeModal);
+overlay.addEventListener("click", closeModal);
+modalImage.addEventListener("click", closeModal);
+
+// Call filterFunc with the default filter value on initial load
+filterFunc("all");
