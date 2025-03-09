@@ -1107,7 +1107,9 @@ main {
   }
 }
 
-/* .project-list {
+/*  */
+
+.project-list {
   display: grid;
   grid-template-columns: 1fr;
   gap: 30px;
@@ -1127,10 +1129,10 @@ main {
   animation: scaleUp 0.25s ease forwards;
 }
 
-@keyframes scaleUp {
+/* @keyframes scaleUp {
   0% { transform: scale(0.5); }
   100% { transform: scale(1); }
-}
+} */
 
 .project-item > a { width: 100%; }
 
@@ -1205,7 +1207,7 @@ main {
   color: var(--light-gray-70);
   font-size: var(--fs-6);
   font-weight: var(--fw-300);
-} */
+}
 
 
 
