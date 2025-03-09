@@ -1109,12 +1109,12 @@ main {
 
 /*  */
 
-.project-list {
+/* .project-list {
   display: grid;
   grid-template-columns: 1fr;
   gap: 30px;
   margin-bottom: 10px;
-}
+} */
 
 .project-item {
   transition: opacity 0.5s ease, transform 0.5s ease;
