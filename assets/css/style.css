@@ -1098,6 +1098,13 @@ main {
   padding-left: 15px;
 }
 
+.project-description li::before {
+  content: "•"; /* Custom bullet symbol */
+  position: absolute;
+  left: 0;
+  color: var(--primary-color); /* Customize the color */
+}
+
 /* Responsive styles for smaller screens */
 @media (max-width: 768px) {
   .project-content {
