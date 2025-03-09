@@ -1100,8 +1100,6 @@ main {
 
 .project-description li::before {
   content: "•"; /* Custom bullet symbol */
-  position: absolute;
-  left: 0;
   color: var(--primary-color); /* Customize the color */
 }
 
