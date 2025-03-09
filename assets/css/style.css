@@ -1077,22 +1077,10 @@ main {
   margin-bottom: 10px;
 }
 
-.project-meta {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 10px;
-}
-
 .project-category {
   font-size: var(--fs-6);
   color: var(--light-gray-70);
   margin-bottom: 10px;
-}
-
-.project-date {
-  font-size: var(--fs-6);
-  color: var(--light-gray-70);
 }
 
 .project-description-summary {
