@@ -1083,10 +1083,19 @@ main {
   margin-bottom: 10px;
 }
 
-.project-description {
+.project-description-summary {
   font-size: var(--fs-6);
   color: var(--light-gray);
   line-height: 1.6;
+  margin-bottom: 10px;
+}
+
+.project-description {
+  font-size: var(--fs-6);
+  color: var(--light-gray);
+  line-height: 1.4;
+  list-style-type: disc;
+  padding-left: 15px;
 }
 
 /* Responsive styles for smaller screens */
