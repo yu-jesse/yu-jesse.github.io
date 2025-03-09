@@ -1068,7 +1068,7 @@ main {
   flex: 2;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: top;
 }
 
 .project-title {
