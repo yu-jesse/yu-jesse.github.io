@@ -1202,7 +1202,7 @@ main {
   --scale: 0.8;
 
   background: var(--jet);
-  color: var (--orange-yellow-crayola);
+  color: var(--orange-yellow-crayola);
   position: absolute;
   top: 50%;
   left: 50%;
@@ -1274,7 +1274,7 @@ main {
   background: var(--eerie-black-2);
   border: 1px solid var(--jet);
   border-radius: 12px;
-  box-shadow: var (--shadow-1);
+  box-shadow: var(--shadow-1);
 }
 
 .course-title {
@@ -1285,7 +1285,7 @@ main {
 
 .course-description {
   font-size: var(--fs-6);
-  color: var (--light-gray);
+  color: var(--light-gray);
   line-height: 1.6;
 }
 
