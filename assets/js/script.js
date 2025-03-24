@@ -48,45 +48,67 @@ overlay.addEventListener("click", hobbiesModalFunc);
 // custom select variables
 const select = document.querySelector("[data-select]");
 const selectItems = document.querySelectorAll("[data-select-item]");
-const selectValue = document.querySelector("[data-selecct-value]");
+const selectValue = document.querySelector("[data-select-value]");
 const filterBtn = document.querySelectorAll("[data-filter-btn]");
 
-select.addEventListener("click", function () { elementToggleFunc(this); });
+// Dropdown toggle
+select.addEventListener("click", function () {
+  elementToggleFunc(this);
+});
 
-// add event in all select items
+// Add event to all select items
 for (let i = 0; i < selectItems.length; i++) {
   selectItems[i].addEventListener("click", function () {
-    let selectedValue = this.innerText.toLowerCase();
-    selectValue.innerText = this.innerText;
-    elementToggleFunc(select);
-    filterFunc(selectedValue);
+    const selectedValue = this.innerText.toLowerCase();
+    selectValue.innerText = this.innerText; // Update the displayed value
+    elementToggleFunc(select); // Close the dropdown
+    filterFunc(selectedValue); // Apply the filter
   });
 }
 
 // filter variables
 const filterItems = document.querySelectorAll("[data-filter-item]");
 
+// Filter function
 const filterFunc = function (selectedValue) {
-  let projectList = document.querySelector(".project-list");
-  projectList.innerHTML = ""; // Clear the project list
+  // Hide all dividers initially
+  const dividers = document.querySelectorAll(".divider");
+  dividers.forEach((divider) => {
+    divider.style.display = "none";
+  });
 
-  let filteredItems = Array.from(filterItems).filter(item => 
-    selectedValue === "all" || selectedValue === item.dataset.category
-  );
+  // Filter items based on the selected value
+  const visibleItems = [];
+  for (let i = 0; i < filterItems.length; i++) {
+    const itemCategory = filterItems[i].dataset.category;
 
-  filteredItems.forEach((item, index) => {
-    item.classList.add("active");
-    if (index % 2 !== 0) {
-      item.querySelector(".project-content").classList.add("reverse");
+    if (selectedValue === "all" || selectedValue === itemCategory) {
+      filterItems[i].classList.add("active");
+      filterItems[i].style.display = "block";
+      visibleItems.push(filterItems[i]);
     } else {
-      item.querySelector(".project-content").classList.remove("reverse");
+      filterItems[i].classList.remove("active");
+      filterItems[i].style.display = "none";
     }
-    projectList.appendChild(item);
+  }
 
-    if (index < filteredItems.length - 1) {
-      let divider = document.createElement("li");
-      divider.classList.add("divider");
-      projectList.appendChild(divider);
+  // Add dividers between visible items
+  for (let i = 0; i < visibleItems.length - 1; i++) {
+    const nextSibling = visibleItems[i].nextElementSibling;
+    if (nextSibling && nextSibling.classList.contains("divider")) {
+      nextSibling.style.display = "block"; // Show the divider
+    }
+  }
+
+  // Apply alternating alignment for visible items
+  visibleItems.forEach((item, index) => {
+    const projectContent = item.querySelector(".project-content");
+    if (projectContent) {
+      if (index % 2 === 0) {
+        projectContent.classList.remove("reverse");
+      } else {
+        projectContent.classList.add("reverse");
+      }
     }
   });
 };
@@ -96,26 +118,13 @@ let lastClickedBtn = filterBtn[0];
 
 for (let i = 0; i < filterBtn.length; i++) {
   filterBtn[i].addEventListener("click", function () {
-    let selectedValue = this.innerText.toLowerCase();
-    filterFunc(selectedValue);
+    const selectedValue = this.innerText.toLowerCase();
+    selectValue.innerText = this.innerText; // Sync dropdown value with button
+    filterFunc(selectedValue); // Apply the filter
 
     lastClickedBtn.classList.remove("active");
     this.classList.add("active");
     lastClickedBtn = this;
-  });
-}
-
-// add event in all select items for small screen
-select.addEventListener("click", function () {
-  this.classList.toggle("active");
-});
-
-for (let i = 0; i < selectItems.length; i++) {
-  selectItems[i].addEventListener("click", function () {
-    let selectedValue = this.innerText.toLowerCase();
-    selectValue.innerText = this.innerText;
-    filterFunc(selectedValue);
-    select.classList.remove("active");
   });
 }
 
@@ -170,7 +179,7 @@ for (let i = 0; i < navigationLinks.length; i++) {
 // Function to open the modal with the clicked image
 const openModal = function (src, alt) {
   modalImage.src = src;
-  modalImage.alt = alt;
+  modalImage.alt = alt || ""; // Use empty alt if not provided
   modalContainer.classList.add("active");
   modalImage.style.cursor = "pointer"; // Change cursor to zoom-out
 };
@@ -178,7 +187,8 @@ const openModal = function (src, alt) {
 // Function to close the modal
 const closeModal = function () {
   modalContainer.classList.remove("active");
-  modalImage.style.cursor = "pointer"; // Change cursor back to zoom-in
+  modalImage.src = ""; // Clear the modal content
+  modalImage.alt = "";
 };
 
 // Add click event to all project images
