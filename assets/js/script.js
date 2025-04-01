@@ -222,3 +222,19 @@ const setPlaybackSpeed = function () {
 document.addEventListener("DOMContentLoaded", function () {
   setPlaybackSpeed();
 });
+
+// Function to toggle the course category content
+document.querySelectorAll("[data-category-toggle]").forEach((toggle) => {
+  toggle.addEventListener("click", () => {
+    const allContents = document.querySelectorAll(".course-list-items");
+
+    allContents.forEach((item) => {
+      if (item !== toggle.nextElementSibling) {
+        item.classList.remove("active"); // Close others
+      }
+    });
+
+    // Toggle the clicked category
+    toggle.nextElementSibling.classList.toggle("active");
+  });
+});

@@ -187,7 +187,8 @@ article {
   margin: 16px 0;
 }
 
-.icon-box {
+.icon-box,
+.contact-icon-box {
   position: relative;
   background: var(--border-gradient-onyx);
   width: 30px;
@@ -202,7 +203,8 @@ article {
   z-index: 1;
 }
 
-.icon-box::before {
+.icon-box::before,
+.contact-icon-box::before {
   content: "";
   position: absolute;
   inset: 1px;
@@ -211,7 +213,7 @@ article {
   z-index: -1;
 }
 
-.icon-box ion-icon { --ionicon-stroke-width: 35px; }
+.icon-box, .contact-icon-box ion-icon { --ionicon-stroke-width: 35px; }
 
 article { display: none; }
 
@@ -319,6 +321,10 @@ main {
 .avatar-box {
   background: var(--bg-gradient-onyx);
   border-radius: 20px;
+}
+
+.avatar-box img {
+  border-radius: 12px;
 }
 
 .info-content .name {
@@ -659,7 +665,7 @@ main {
 
 .timeline-list {
   font-size: var(--fs-6);
-  margin-left: 45px;
+  margin-left: 34px;
 }
 
 .timeline-item { position: relative; }
@@ -696,7 +702,7 @@ main {
   content: "";
   position: absolute;
   top: -25px;
-  left: -30px;
+  left: -20px;
   width: 1px;
   height: calc(100% + 50px);
   background: var(--jet);
@@ -706,7 +712,7 @@ main {
   content: "";
   position: absolute;
   top: 5px;
-  left: -33px;
+  left: -23px;
   height: 6px;
   width: 6px;
   background: var(--text-gradient-orange);
@@ -718,6 +724,37 @@ main {
   color: var(--light-gray);
   font-weight: var(--fw-300);
   line-height: 1.6;
+  margin-block-end: 10px;
+}
+
+.timeline-text li {
+  position: relative;
+  margin-left: 20px;
+  padding-left: 20px;
+  line-height: 1.8;
+  font-size: var(--fs-7);
+  color: var(--light-gray);
+}
+
+.timeline-text li::before {
+  content: "✔";
+  position: absolute;
+  left: 0;
+  color: var(--primary-color);
+  font-weight: var(--fw-400);
+}
+
+
+/* Responsive styles for larger screens */
+@media (min-width: 768px) {
+  .timeline-list {
+    margin-left: 45px;
+  }
+
+  .timeline-item-title,
+  .timeline-item-subtitle {
+    gap: 15px;
+  }
 }
 
 
@@ -938,8 +975,13 @@ main {
 .project-description-summary {
   font-size: var(--fs-7);
   color: var(--light-gray);
-  line-height: 2.0;
+  line-height: 1.5;
   margin-bottom: 10px;
+}
+
+.project-description-summary::before {
+  content: "Summary:  ";
+  color: var(--primary-color);
 }
 
 .project-description {
@@ -947,9 +989,29 @@ main {
   color: var(--light-gray);
   line-height: 1.8;
   list-style-type: disc;
+  margin-bottom: 15px;
 }
 
 .project-description li::before {
+  content: "• ";
+  color: var(--primary-color);
+}
+
+.project-considerations-title {
+  font-size: var(--fs-7);
+  color: var(--light-gray-70);
+  margin-bottom: 10px;
+}
+
+.project-considerations {
+  font-size: var(--fs-7);
+  color: var(--light-gray);
+  line-height: 1.8;
+  list-style-type: disc;
+  margin-bottom: 15px;
+}
+
+.project-considerations li::before {
   content: "• ";
   color: var(--primary-color);
 }
@@ -1008,45 +1070,67 @@ main {
   opacity: 1;
 }
 
+/* Resume-style bullet points */
+.project-description li,
+.project-considerations li {
+  position: relative;
+  margin-left: 10px; /* Indent the bullet points */
+  padding-left: 20px; /* Space between bullet and text */
+  line-height: 1.8;
+  font-size: var(--fs-7);
+  color: var(--light-gray);
+}
 
-
+.project-description li::before,
+.project-considerations li::before {
+  content: "✔"; /* Use the same dash as the resume page */
+  position: absolute;
+  left: 0;
+  color: var(--primary-color); /* Match the color used in the resume */
+  font-weight: var(--fw-400);
+}
 
 /*-----------------------------------*\
   #COURSES
 \*-----------------------------------*/
 
-.course-list {
-  margin-bottom: 30px;
+.course-matrix {
+  margin-top: 0px;
 }
 
-.course-list-items {
-  list-style: none;
-  padding: 0;
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 20px;
-}
-
-.course-item {
-  padding: 15px;
-  background: var(--eerie-black-2);
+.course-table {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
   border: 1px solid var(--jet);
   border-radius: 12px;
   box-shadow: var(--shadow-1);
+  z-index: 1;
 }
 
-.course-title {
-  margin-bottom: 10px;
-  font-size: var(--fs-5);
-  color: var(--white-2);
+/* Each row and column as block for mobile */
+.course-row {
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid var(--jet);
+  padding: 12px 0;
 }
 
-.course-description {
+.course-col {
+  padding: 8px 16px;
   font-size: var(--fs-7);
   color: var(--light-gray);
-  line-height: 1.6;
 }
 
+/* Hide the second column (Category) on small screens */
+.course-row > .course-col:nth-child(2) {
+  display: none;
+}
+
+/* Hide table headers on small screens */
+.course-header {
+  display: none;
+}
 
 
 /*-----------------------------------*\
@@ -1438,7 +1522,9 @@ main {
   .project-category,
   .project-date,
   .project-description-summary,
-  .project-description {
+  .project-description,
+  .project-considerations-title,
+  .project-considerations {
     font-size: var(--fs-6);
   }
 
@@ -1447,16 +1533,42 @@ main {
    * COURSES
    */
 
-  .course-list-items {
-    grid-template-columns: 1fr 1fr;
+  .course-table {
+    display: table;;
+    border-radius: 12px;
+    overflow: hidden;
   }
 
-  .course-title {
-    font-size: var(--fs-4);
+  .course-row {
+    display: table-row;
+    padding: 0;
+    border-radius: 12px;
   }
 
-  .course-description {
+  .course-col {
+    display: table-cell;
+    padding: 12px 16px;
+    vertical-align: middle;
+    border-top: 1px solid var(--jet);
+    min-width: 105px;
+  }
+
+  .course-header {
+    display: table-row;
+    background: var(--jet);
+    font-weight: var(--fw-600);
+    color: var(--white-2);
+    border-bottom: 1px solid var(--jet);
+    border-radius: 12px;
+  }
+
+  .course-header .course-col {
     font-size: var(--fs-6);
+    white-space: nowrap;
+  }
+
+  .course-row > .course-col:nth-child(2) {
+    display: table-cell;
   }
 
 
@@ -1645,6 +1757,10 @@ main {
     grid-template-columns: 1fr 1fr 1fr;
   }
 
+  .category-toggle {
+    font-size: var(--fs-4);
+  }
+
 
   /**
    * CREDITS
@@ -1776,7 +1892,7 @@ main {
      * RESUME
      */
 
-  .timeline-text { max-width: 700px; }
+  .timeline-text { max-width: 1000px; }
 
 }
 
