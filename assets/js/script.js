@@ -181,7 +181,6 @@ const openModal = function (src, alt) {
   modalImage.src = src;
   modalImage.alt = alt || ""; // Use empty alt if not provided
   modalContainer.classList.add("active");
-  modalImage.style.cursor = "pointer"; // Change cursor to zoom-out
 };
 
 // Function to close the modal
@@ -199,10 +198,13 @@ projectImages.forEach((img) => {
   });
 });
 
-// Add click event to close button, overlay, and modal image
-modalCloseBtn.addEventListener("click", closeModal);
-overlay.addEventListener("click", closeModal);
-modalImage.addEventListener("click", closeModal);
+// Add click event to close the modal when clicking anywhere in the modal container
+modalContainer.addEventListener("click", closeModal);
+
+// Prevent closing the modal when clicking directly on the image
+modalImage.addEventListener("click", function (event) {
+  event.stopPropagation(); // Prevent the click event from propagating to the modal container
+});
 
 // Call filterFunc with the default filter value on initial load
 filterFunc("all");
@@ -237,4 +239,28 @@ document.querySelectorAll("[data-category-toggle]").forEach((toggle) => {
     // Toggle the clicked category
     toggle.nextElementSibling.classList.toggle("active");
   });
+});
+
+// Select the toggle button
+const themeToggle = document.getElementById("theme-toggle");
+
+// Check for saved user preference in localStorage
+const currentTheme = localStorage.getItem("theme");
+if (currentTheme === "light") {
+  document.documentElement.classList.add("light-mode");
+  themeToggle.textContent = "🌙"; // Set icon to moon
+}
+
+// Add event listener to toggle button
+themeToggle.addEventListener("click", () => {
+  document.documentElement.classList.toggle("light-mode");
+
+  // Save user preference to localStorage
+  if (document.documentElement.classList.contains("light-mode")) {
+    localStorage.setItem("theme", "light");
+    themeToggle.textContent = "🌙"; // Set icon to moon
+  } else {
+    localStorage.setItem("theme", "dark");
+    themeToggle.textContent = "☀️"; // Set icon to sun
+  }
 });

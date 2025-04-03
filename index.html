@@ -54,7 +54,7 @@
         <button class="info_more-btn" data-sidebar-btn>
           <span>Show Contacts</span>
 
-          <ion-icon name="chevron-down"></ion-icon>
+          <img src="./assets/images/down-arrow.png" alt="Arrow Icon" class="icon">
         </button>
 
       </div>
@@ -68,7 +68,7 @@
           <li class="contact-item">
 
             <div class="contact-icon-box">
-              <ion-icon name="mail-outline"></ion-icon>
+              <img src="./assets/images/email.png" alt="Mail Icon" class="icon">
             </div>
 
             <div class="contact-info">
@@ -82,7 +82,7 @@
           <li class="contact-item">
 
             <div class="contact-icon-box">
-              <ion-icon name="phone-portrait-outline"></ion-icon>
+              <img src="./assets/images/phone.png" alt="Mail Icon" class="icon">
             </div>
 
             <div class="contact-info">
@@ -96,13 +96,13 @@
           <li class="contact-item">
 
             <div class="contact-icon-box">
-              <ion-icon name="logo-linkedin"></ion-icon>
+              <img src="./assets/images/linkedin.png" alt="Mail Icon" class="icon">
             </div>
 
             <div class="contact-info">
               <p class="contact-title">LinkedIn</p>
 
-              <time datetime="https://www.linkedin.com/in/jesse--yu/">jesse--yu</time>
+              <a href="https://www.linkedin.com/in/jesse--yu/" class="contact-link">linkedin.com/in/jesse--yu</a>
             </div>
 
           </li>
@@ -194,6 +194,8 @@
           </li>
 
         </ul>
+
+        <!-- <button id="theme-toggle" aria-label="Toggle Light/Dark Mode">🌙</button> -->
 
       </nav>
 
@@ -387,7 +389,7 @@
 
           <div class="title-wrapper">
             <div class="icon-box">
-              <ion-icon name="book-outline"></ion-icon>
+              <img src="./assets/images/book.png" alt="Mail Icon" class="icon">
             </div>
             <h3 class="h3">Education</h3>
           </div>
@@ -433,7 +435,7 @@
 
           <div class="title-wrapper">
             <div class="icon-box">
-              <ion-icon name="briefcase-outline"></ion-icon>
+              <img src="./assets/images/briefcase.png" alt="Mail Icon" class="icon">
             </div>
             <h3 class="h3">Experience</h3>
           </div>
@@ -715,7 +717,7 @@
       
             <button class="filter-select" data-select>
       
-              <div class="select-value" data-select-value>Select Category ∨</div>
+              <div class="select-value" data-select-value>Select Category</div>
       
               <div class="select-icon">
                 <ion-icon name="chevron-down"></ion-icon>
@@ -1021,37 +1023,61 @@
         <header>
           <h2 class="h2 article-title">Credits</h2>
         </header>
-      
+
         <section class="credits-list">
-      
+
           <ul class="credits-list-items">
-      
+
+            <!-- Website Base -->
             <li class="credits-item">
-              <span class="credits-title">Website Base:</span>
-              <span class="credits-description">
-                <a href="https://github.com/codewithsadee/vcard-personal-portfolio" target="_blank">codewithsadee</a>
-              </span>
+              <span class="credits-title">Website Fork:</span>
+              <p class="credits-description">
+                <a href="https://github.com/codewithsadee/vcard-personal-portfolio" target="_blank">codewithsadee</a> from GitHub
+              </p>
             </li>
-      
+
+            <!-- Fonts -->
             <li class="credits-item">
-              <span class="credits-title">SVG Icons:</span>
-              <span class="credits-description">
-                <a href="https://www.flaticon.com/" target="_blank">Flaticon</a>
-              </span>
+              <span class="credits-title">Fonts:</span>
+              <p class="credits-description">
+                <a href="https://fonts.google.com/specimen/Poppins" target="_blank">Poppins</a> by Google Fonts
+              </p>
             </li>
-      
+
+            <!-- Libraries -->
             <li class="credits-item">
-              <span class="credits-title">Images:</span>
-              <span class="credits-description">
-                <a href="https://unsplash.com/" target="_blank">Unsplash</a>
-              </span>
+              <span class="credits-title">Libraries:</span>
+              <p class="credits-description">
+                <a href="https://github.com/" target="_blank">GitHub</a> for version control and hosting.
+              </p>
             </li>
-      
+
           </ul>
-      
+
         </section>
-      
-      </article>     
+
+        <!-- Icons Credits Section -->
+        <section class="icons-credits">
+          <h3 class="h3 icons-credits-title">Icons Credits</h3>
+          <ul class="icon-credit-sublist">
+            <li><a href="https://www.flaticon.com/free-icons/robot" title="robot icons" target="_blank">Robot icons created by smalllikeart - Flaticon</a></li>
+            <li><a href="https://www.flaticon.com/free-icons/architecture" title="architecture icons" target="_blank">Architecture icons created by HAJICON - Flaticon</a></li>
+            <li><a href="https://www.flaticon.com/free-icons/compressor" title="compressor icons" target="_blank">Compressor icons created by PIXARTIST - Flaticon</a></li>
+            <li><a href="https://www.flaticon.com/free-icons/cnc" title="cnc icons" target="_blank">Cnc icons created by Iconjam - Flaticon</a></li>
+            <li><a href="https://www.flaticon.com/free-icons/briefcase" title="briefcase icons" target="_blank">Briefcase icons created by Freepik - Flaticon</a></li>
+            <li><a href="https://www.flaticon.com/free-icons/linkedin" title="linkedin icons" target="_blank">Linkedin icons created by Freepik - Flaticon</a></li>
+            <li><a href="https://www.flaticon.com/free-icons/phone-call" title="phone call icons" target="_blank">Phone call icons created by Ilham Fitrotul Hayat - Flaticon</a></li>
+            <li><a href="https://www.flaticon.com/free-icons/mail" title="mail icons" target="_blank">Mail icons created by Freepik - Flaticon</a></li>
+            <li><a href="https://www.flaticon.com/free-icons/open-book" title="open book icons" target="_blank">Open book icons created by Icon Mela - Flaticon</a></li>
+            <li><a href="https://www.flaticon.com/free-icons/sport-equipment" title="sport equipment icons" target="_blank">Sport equipment icons created by Fitricon - Flaticon</a></li>
+            <li><a href="https://www.flaticon.com/free-icons/diy" title="DIY icons" target="_blank">DIY icons created by HAJICON - Flaticon</a></li>
+            <li><a href="https://www.flaticon.com/free-icons/camping" title="camping icons" target="_blank">Camping icons created by Eucalyp - Flaticon</a></li>
+            <li><a href="https://www.flaticon.com/free-icons/down-arrow" title="down arrow icons" target="_blank">Down arrow icons created by th studio - Flaticon</a></li>
+          </ul>
+        </section>
+
+      </article>
+  
       
 
 
@@ -1080,11 +1106,6 @@
   -->
   <script src="./assets/js/script.js"></script>
 
-  <!--
-    - ionicon link
-  -->
-  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
 </body>
 
