@@ -101,7 +101,7 @@
           useCORS: true
         }).then(canvas => {
           const link = document.createElement("a");
-          link.download = "jesse-thumbnail.png";
+          link.download = "thumbnail.png";
           link.href = canvas.toDataURL("image/png");
           link.click();
         }).catch(err => {
