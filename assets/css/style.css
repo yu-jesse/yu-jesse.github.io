@@ -1008,7 +1008,7 @@ main {
 
 .project-images img,
 .project-images video {
-  max-height: 400px;
+  max-height: 200px;
   width: auto;
   height: auto;
   object-fit: cover;
