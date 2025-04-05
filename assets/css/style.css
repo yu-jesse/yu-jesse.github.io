@@ -979,33 +979,32 @@ main {
 .project-content {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  margin-bottom: 30px;
-}
-
-.project-content.reverse {
-  flex-direction: column;
+  align-items: stretch;
+  gap: 15px;
+  overflow: hidden;
 }
 
 .project-images {
   flex: 1;
   display: flex;
   flex-direction: row;
+  overflow-y: auto;
   overflow-x: auto;
+  min-height: 0;
+  max-height: 100%;
   gap: 10px;
-  scroll-behavior: smooth; /* Smooth scrolling */
-  overscroll-behavior-inline: contain; /* Prevent scrolling beyond the container */
-  scroll-snap-type: x mandatory; /* Snap to items when scrolling */
-  scroll-padding-inline: 10px; /* Add padding for better alignment */
+  transition: height 0.3s ease;
   padding-bottom: 15px;
 }
 
 .project-images img,
 .project-images video {
-  flex: 0 0 auto;
+  max-height: 200px;
   width: auto;
-  height: 150px;
+  height: auto;
+  object-fit: cover;
   border-radius: 12px;
+  flex-shrink: 0;
   box-shadow: var(--shadow-1);
   cursor: pointer;
 }
@@ -1016,7 +1015,7 @@ main {
 }
 
 .project-images::-webkit-scrollbar {
-  height: 8px; /* Set the height for the horizontal scrollbar */
+  height: 5px;
 }
 
 .project-images::-webkit-scrollbar-track {
@@ -1034,13 +1033,32 @@ main {
 }
 
 .project-images::-webkit-scrollbar-button {
-  width: 10px; /* Optional: Adjust the width of the scrollbar buttons */
+  width: 5px; /* Optional: Adjust the width of the scrollbar buttons */
 }
 
 .project-details {
   flex: 2;
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
+}
+
+.project-details::-webkit-scrollbar {
+  width: 5px;
+}
+
+.project-details::-webkit-scrollbar-track {
+  background: var(--onyx);
+  border-radius: 5px;
+}
+
+.project-details::-webkit-scrollbar-thumb {
+  background: var(--orange);
+  border-radius: 5px;
+}
+
+.project-details::-webkit-scrollbar-thumb:hover {
+  background: hsla(0, 0%, 100%, 0.15);
 }
 
 .project-title {
@@ -1117,24 +1135,51 @@ main {
   align-items: center;
   background-color: rgba(0, 0, 0, 0.8);
   z-index: 1000;
+  animation: fadeIn 0.3s ease-in-out; /* Fade-in animation */
 }
 
+/* Show the modal */
 .modal-container.active {
   display: flex;
 }
 
+/* Modal Content */
 .modal-content {
   position: relative;
-  max-width: 90%;
-  max-height: 90%;
+  max-width: 50%; /* Default max width */
+  max-height: 100%; /* Default max height */
+  animation: expand 0.2s ease-in-out; /* Expanding animation */
 }
 
+/* Modal Image */
 .modal-image {
   width: 100%;
   height: auto;
   border-radius: 5px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
   cursor: pointer;
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+  from {
+    background-color: rgba(0, 0, 0, 0);
+  }
+  to {
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+}
+
+/* Expanding animation */
+@keyframes expand {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 /* Resume-style bullet points */
@@ -1267,7 +1312,7 @@ main {
 .icon-credit-sublist li {
   margin-bottom: 4px;
   font-size: var(--fs-7);
-  color: var(--light-gray);
+  color: var (--light-gray);
 }
 
 .icon-credit-sublist li a {
@@ -1703,22 +1748,93 @@ main {
   /* projects */
 
   .project-content {
+    display: flex;
     flex-direction: row;
+    align-items: stretch;
+    gap: 30px;
+    overflow: hidden;
   }
-
+  
   .project-content.reverse {
     flex-direction: row-reverse;
   }
-
+  
   .project-images {
+    flex: 1;
+    display: flex;
     flex-direction: column;
-    overflow-x: unset;
+    overflow-y: auto;
+    overflow-x: hidden;
+    min-height: 0;
+    max-height: 100%;
+    padding-right: 10px;
+    gap: 10px;
+    transition: height 0.3s ease;
   }
-
+  
   .project-images img,
   .project-images video {
-    width: 100%;
+    max-height: 200px;
+    width: auto;
     height: auto;
+    object-fit: cover;
+    border-radius: 12px;
+    flex-shrink: 0;
+    box-shadow: var(--shadow-1);
+    cursor: pointer;
+  }
+  
+  .project-images img:hover,
+  .project-images video:hover {
+    opacity: 0.8;
+  }
+  
+  .project-images::-webkit-scrollbar {
+    width: 5px; /* Set the width for the vertical scrollbar */
+  }
+  
+  .project-images::-webkit-scrollbar-track {
+    background: var(--onyx); /* Match the vertical scrollbar track color */
+    border-radius: 5px;
+  }
+  
+  .project-images::-webkit-scrollbar-thumb {
+    background: var(--orange); /* Match the vertical scrollbar thumb color */
+    border-radius: 5px;
+  }
+  
+  .project-images::-webkit-scrollbar-thumb:hover {
+    background: hsla(0, 0%, 100%, 0.15); /* Slightly lighter on hover */
+  }
+  
+  .project-images::-webkit-scrollbar-button {
+    width: 5px; /* Optional: Adjust the width of the scrollbar buttons */
+  }
+  
+  .project-details {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    padding-right: 10px;
+  }
+  
+  .project-details::-webkit-scrollbar {
+    width: 5px;
+  }
+  
+  .project-details::-webkit-scrollbar-track {
+    background: var(--onyx);
+    border-radius: 5px;
+  }
+  
+  .project-details::-webkit-scrollbar-thumb {
+    background: var(--orange);
+    border-radius: 5px;
+  }
+  
+  .project-details::-webkit-scrollbar-thumb:hover {
+    background: hsla(0, 0%, 100%, 0.15);
   }
 
   .project-title {

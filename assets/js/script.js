@@ -1,266 +1,228 @@
 'use strict';
 
-// element toggle function
-const elementToggleFunc = function (elem) { elem.classList.toggle("active"); }
+// Element toggle function
+const elementToggleFunc = (elem) => elem.classList.toggle("active");
 
-// sidebar variables
+// Sidebar toggle
 const sidebar = document.querySelector("[data-sidebar]");
 const sidebarBtn = document.querySelector("[data-sidebar-btn]");
+if (sidebar && sidebarBtn) {
+  sidebarBtn.addEventListener("click", () => elementToggleFunc(sidebar));
+}
 
-// sidebar toggle functionality for mobile
-sidebarBtn.addEventListener("click", function () { elementToggleFunc(sidebar); });
-
-// hobbies variables
+// Hobbies modal
 const hobbiesItem = document.querySelectorAll("[data-hobbies-item]");
-
-// modal variables
-const modalContainer = document.querySelector("[data-modal-container]");
-const modalImage = document.querySelector("[data-modal-image]");
-const modalCloseBtn = document.querySelector("[data-modal-close-btn]");
-const overlay = document.querySelector("[data-overlay]");
-
-// modal variable
+const modalContainer = document.querySelector(".modal-container");
+const modalImage = document.querySelector(".modal-image");
+const modalContent = document.querySelector(".modal-content");
 const modalImg = document.querySelector("[data-modal-img]");
 const modalTitle = document.querySelector("[data-modal-title]");
 const modalText = document.querySelector("[data-modal-text]");
+const modalCloseBtn = document.querySelector("[data-modal-close-btn]");
+const overlay = document.querySelector("[data-overlay]");
 
-// modal toggle function
-const hobbiesModalFunc = function () {
+const hobbiesModalFunc = () => {
   modalContainer.classList.toggle("active");
   overlay.classList.toggle("active");
-}
+};
 
-// add click event to all modal items
-for (let i = 0; i < hobbiesItem.length; i++) {
-  hobbiesItem[i].addEventListener("click", function () {
-    modalImg.src = this.querySelector("[data-hobbies-avatar]").src;
-    modalImg.alt = this.querySelector("[data-hobbies-avatar]").alt;
-    modalTitle.innerHTML = this.querySelector("[data-hobbies-title]").innerHTML;
-    modalText.innerHTML = this.querySelector("[data-hobbies-text]").innerHTML;
-    hobbiesModalFunc();
+if (hobbiesItem.length > 0) {
+  hobbiesItem.forEach((item) => {
+    item.addEventListener("click", () => {
+      modalImg.src = item.querySelector("[data-hobbies-avatar]").src;
+      modalImg.alt = item.querySelector("[data-hobbies-avatar]").alt;
+      modalTitle.innerHTML = item.querySelector("[data-hobbies-title]").innerHTML;
+      modalText.innerHTML = item.querySelector("[data-hobbies-text]").innerHTML;
+      hobbiesModalFunc();
+    });
   });
+
+  modalCloseBtn.addEventListener("click", hobbiesModalFunc);
+  overlay.addEventListener("click", hobbiesModalFunc);
 }
 
-// add click event to modal close button
-modalCloseBtn.addEventListener("click", hobbiesModalFunc);
-overlay.addEventListener("click", hobbiesModalFunc);
-
-// custom select variables
+// Filter dropdown and buttons
 const select = document.querySelector("[data-select]");
 const selectItems = document.querySelectorAll("[data-select-item]");
 const selectValue = document.querySelector("[data-select-value]");
 const filterBtn = document.querySelectorAll("[data-filter-btn]");
+const filterItems = document.querySelectorAll("[data-filter-item]");
 
-// Dropdown toggle
-select.addEventListener("click", function () {
-  elementToggleFunc(this);
-});
+if (select && selectItems && selectValue) {
+  select.addEventListener("click", () => elementToggleFunc(select));
 
-// Add event to all select items
-for (let i = 0; i < selectItems.length; i++) {
-  selectItems[i].addEventListener("click", function () {
-    const selectedValue = this.innerText.toLowerCase();
-    selectValue.innerText = this.innerText; // Update the displayed value
-    elementToggleFunc(select); // Close the dropdown
-    filterFunc(selectedValue); // Apply the filter
+  selectItems.forEach((item) => {
+    item.addEventListener("click", () => {
+      const selectedValue = item.innerText.toLowerCase();
+      selectValue.innerText = item.innerText;
+      elementToggleFunc(select);
+      filterFunc(selectedValue);
+    });
   });
 }
 
-// filter variables
-const filterItems = document.querySelectorAll("[data-filter-item]");
+let lastClickedBtn = filterBtn[0];
+if (filterBtn.length > 0) {
+  filterBtn.forEach((btn) => {
+    btn.addEventListener("click", function () {
+      const selectedValue = this.innerText.toLowerCase();
+      if (selectValue) selectValue.innerText = this.innerText;
+      filterFunc(selectedValue);
 
-// Filter function
-const filterFunc = function (selectedValue) {
-  // Hide all dividers initially
+      if (lastClickedBtn) lastClickedBtn.classList.remove("active");
+      this.classList.add("active");
+      lastClickedBtn = this;
+    });
+  });
+}
+
+const filterFunc = (selectedValue) => {
   const dividers = document.querySelectorAll(".divider");
-  dividers.forEach((divider) => {
-    divider.style.display = "none";
+  dividers.forEach((divider) => divider.style.display = "none");
+
+  const visibleItems = [];
+  filterItems.forEach((item) => {
+    const itemCategory = item.dataset.category;
+    if (selectedValue === "all" || selectedValue === itemCategory) {
+      item.classList.add("active");
+      item.style.display = "block";
+      visibleItems.push(item);
+    } else {
+      item.classList.remove("active");
+      item.style.display = "none";
+    }
   });
 
-  // Filter items based on the selected value
-  const visibleItems = [];
-  for (let i = 0; i < filterItems.length; i++) {
-    const itemCategory = filterItems[i].dataset.category;
-
-    if (selectedValue === "all" || selectedValue === itemCategory) {
-      filterItems[i].classList.add("active");
-      filterItems[i].style.display = "block";
-      visibleItems.push(filterItems[i]);
-    } else {
-      filterItems[i].classList.remove("active");
-      filterItems[i].style.display = "none";
-    }
-  }
-
-  // Add dividers between visible items
-  for (let i = 0; i < visibleItems.length - 1; i++) {
-    const nextSibling = visibleItems[i].nextElementSibling;
-    if (nextSibling && nextSibling.classList.contains("divider")) {
-      nextSibling.style.display = "block"; // Show the divider
-    }
-  }
-
-  // Apply alternating alignment for visible items
   visibleItems.forEach((item, index) => {
     const projectContent = item.querySelector(".project-content");
     if (projectContent) {
-      if (index % 2 === 0) {
-        projectContent.classList.remove("reverse");
-      } else {
-        projectContent.classList.add("reverse");
-      }
+      projectContent.classList.toggle("reverse", index % 2 !== 0);
+    }
+
+    const nextSibling = item.nextElementSibling;
+    if (nextSibling && nextSibling.classList.contains("divider")) {
+      nextSibling.style.display = "block";
     }
   });
+
+  adjustProjectImageHeights(); // Fix height after filtering
 };
 
-// add event in all filter button items for large screen
-let lastClickedBtn = filterBtn[0];
+filterFunc("all");
 
-for (let i = 0; i < filterBtn.length; i++) {
-  filterBtn[i].addEventListener("click", function () {
-    const selectedValue = this.innerText.toLowerCase();
-    selectValue.innerText = this.innerText; // Sync dropdown value with button
-    filterFunc(selectedValue); // Apply the filter
-
-    lastClickedBtn.classList.remove("active");
-    this.classList.add("active");
-    lastClickedBtn = this;
-  });
-}
-
-// contact form variables
+// Contact form
 const form = document.querySelector("[data-form]");
 const formInputs = document.querySelectorAll("[data-form-input]");
 const formBtn = document.querySelector("[data-form-btn]");
 
-// add event to all form input field
-for (let i = 0; i < formInputs.length; i++) {
-  formInputs[i].addEventListener("input", function () {
-    // check form validation
-    if (form.checkValidity()) {
-      formBtn.removeAttribute("disabled");
-    } else {
-      formBtn.setAttribute("disabled", "");
-    }
+if (form && formInputs && formBtn) {
+  formInputs.forEach((input) => {
+    input.addEventListener("input", () => {
+      formBtn.disabled = !form.checkValidity();
+    });
   });
 }
 
-// page navigation variables
+// Navigation
 const navigationLinks = document.querySelectorAll("[data-nav-link]");
 const pages = document.querySelectorAll("[data-page]");
 
-// Function to show the selected page
-const showPage = function (pageName) {
-  for (let i = 0; i < pages.length; i++) {
-    if (pageName === pages[i].dataset.page) {
-      pages[i].classList.add("active");
-      navigationLinks[i].classList.add("active");
-      window.scrollTo(0, 0);
-    } else {
-      pages[i].classList.remove("active");
-      navigationLinks[i].classList.remove("active");
-    }
-  }
-}
+const showPage = (pageName) => {
+  pages.forEach((page, i) => {
+    const isActive = page.dataset.page === pageName;
+    page.classList.toggle("active", isActive);
+    navigationLinks[i].classList.toggle("active", isActive);
+  });
+  window.scrollTo(0, 0);
+};
 
-// Retrieve the last selected page from localStorage
 const lastSelectedPage = localStorage.getItem("lastSelectedPage") || "projects";
 showPage(lastSelectedPage);
 
-// add event to all nav link
-for (let i = 0; i < navigationLinks.length; i++) {
-  navigationLinks[i].addEventListener("click", function () {
-    const selectedPage = this.innerHTML.toLowerCase();
+navigationLinks.forEach((link) => {
+  link.addEventListener("click", () => {
+    const selectedPage = link.innerHTML.toLowerCase();
     showPage(selectedPage);
     localStorage.setItem("lastSelectedPage", selectedPage);
   });
-}
+});
 
-// Function to open the modal with the clicked image
-const openModal = function (src, alt) {
+// Project modal
+const openModal = (src, alt, maxWidth = "90%", maxHeight = "90%") => {
   modalImage.src = src;
-  modalImage.alt = alt || ""; // Use empty alt if not provided
+  modalImage.alt = alt || "";
+  modalContent.style.setProperty("--modal-max-width", maxWidth);
+  modalContent.style.setProperty("--modal-max-height", maxHeight);
   modalContainer.classList.add("active");
 };
 
-// Function to close the modal
-const closeModal = function () {
+const closeModal = () => {
   modalContainer.classList.remove("active");
-  modalImage.src = ""; // Clear the modal content
+  modalImage.src = "";
   modalImage.alt = "";
 };
 
-// Add click event to all project images
-const projectImages = document.querySelectorAll(".project-images img");
-projectImages.forEach((img) => {
-  img.addEventListener("click", function () {
-    openModal(this.src, this.alt);
+const projectImages = document.querySelectorAll(".project-images img, .project-images video");
+if (projectImages.length > 0) {
+  projectImages.forEach((media) => {
+    media.addEventListener("click", () => {
+      openModal(media.src, media.alt, "80%", "80%");
+    });
   });
-});
+}
 
-// Add click event to close the modal when clicking anywhere in the modal container
 modalContainer.addEventListener("click", closeModal);
 
-// Prevent closing the modal when clicking directly on the image
-modalImage.addEventListener("click", function (event) {
-  event.stopPropagation(); // Prevent the click event from propagating to the modal container
-});
-
-// Call filterFunc with the default filter value on initial load
-filterFunc("all");
-
-// Function to set the playback speed for all videos based on their data attribute
-const setPlaybackSpeed = function () {
+// Playback speed for videos
+const setPlaybackSpeed = () => {
   const projectVideos = document.querySelectorAll(".project-images video");
   projectVideos.forEach((video) => {
-    const playbackSpeed = video.getAttribute("data-playback-speed");
-    if (playbackSpeed) {
-      video.playbackRate = parseFloat(playbackSpeed);
-    }
+    const speed = video.getAttribute("data-playback-speed");
+    if (speed) video.playbackRate = parseFloat(speed);
   });
 };
 
-// Set the default playback speed when the page loads
-document.addEventListener("DOMContentLoaded", function () {
-  setPlaybackSpeed();
-});
+document.addEventListener("DOMContentLoaded", setPlaybackSpeed);  
 
-// Function to toggle the course category content
-document.querySelectorAll("[data-category-toggle]").forEach((toggle) => {
-  toggle.addEventListener("click", () => {
-    const allContents = document.querySelectorAll(".course-list-items");
-
-    allContents.forEach((item) => {
-      if (item !== toggle.nextElementSibling) {
-        item.classList.remove("active"); // Close others
-      }
-    });
-
-    // Toggle the clicked category
-    toggle.nextElementSibling.classList.toggle("active");
-  });
-});
-
-// Select the toggle button
+// Theme toggle
 const themeToggle = document.getElementById("theme-toggle");
+if (themeToggle) {
+  const currentTheme = localStorage.getItem("theme");
+  if (currentTheme === "light") {
+    document.documentElement.classList.add("light-mode");
+    themeToggle.textContent = "🌙";
+  }
 
-// Check for saved user preference in localStorage
-const currentTheme = localStorage.getItem("theme");
-if (currentTheme === "light") {
-  document.documentElement.classList.add("light-mode");
-  themeToggle.textContent = "🌙"; // Set icon to moon
+  themeToggle.addEventListener("click", () => {
+    const isLight = document.documentElement.classList.toggle("light-mode");
+    localStorage.setItem("theme", isLight ? "light" : "dark");
+    themeToggle.textContent = isLight ? "🌙" : "☀️";
+  });
 }
 
-// Add event listener to toggle button
-themeToggle.addEventListener("click", () => {
-  document.documentElement.classList.toggle("light-mode");
+// === Adjust Project Image Heights Per Item ===
+function adjustProjectImageHeights() {
+  requestAnimationFrame(() => {
+    document.querySelectorAll(".project-item").forEach(item => {
+      const image = item.querySelector(".project-images");
+      const details = item.querySelector(".project-details");
 
-  // Save user preference to localStorage
-  if (document.documentElement.classList.contains("light-mode")) {
-    localStorage.setItem("theme", "light");
-    themeToggle.textContent = "🌙"; // Set icon to moon
-  } else {
-    localStorage.setItem("theme", "dark");
-    themeToggle.textContent = "☀️"; // Set icon to sun
-  }
+      if (image && details) {
+        const height = details.getBoundingClientRect().height;
+        image.style.height = `${height}px`;
+      }
+    });
+  });
+}
+
+// Call this function after content loads and on window resize
+window.addEventListener("load", () => {
+  setTimeout(adjustProjectImageHeights, 300);
 });
+
+let resizeTimeout;
+window.addEventListener("resize", () => {
+  clearTimeout(resizeTimeout);
+  resizeTimeout = setTimeout(adjustProjectImageHeights, 150);
+});
+

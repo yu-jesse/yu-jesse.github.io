@@ -5,6 +5,11 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Jesse Yu – Mechanical Engineer">
+  <meta name="author" content="Jesse Yu">
+  <meta property="og:title" content="Jesse Yu – Portfolio Website">
+  <meta property="og:image" content="link-to-profile-image-or-thumbnail">
+
   <title>Jesse Yu</title>
 
   <!--
@@ -452,10 +457,10 @@
                 <span>Corvallis, Oregon</span>
               </div>
               <ul class="timeline-text">
-                <li>Designed and fabricated a human-operated mechanical device.</li>
-                <li>Developed an embedded system that increased data collection efficiency.</li>
-                <li>Applied technical knowledge as a practicing mechanical engineer.</li>
-                <li>Provided clients with innovative prototype products.</li>
+                <li>Designed and fabricated a human-operated mechanical device for construction use.</li>
+                <li>Developed an embedded system that increased data collection efficiency with 3 minute setup time reduction.</li>
+                <li>Applied technical knowledge as a practicing mechanical engineer using tools like SolidWorks and MATLAB.</li>
+                <li>Provided multiple clients with innovative prototype products.</li>
               </ul>
             </li>
 
@@ -475,7 +480,7 @@
                 <li>Expanded industry engagement by organizing guest speaker events and product development projects.</li>
                 <li>Guided club strategy and growth, aligning with the founders’ vision while introducing new initiatives to enhance member experience.</li>
                 <li>Collaborated with industry professionals to create networking and mentorship opportunities for students.</li>
-                <li>Managed and supported a leadership team, ensuring smooth operations and effective event planning.</li>
+                <li>Managed and supported a 9-person leadership team, ensuring smooth operations and effective event planning.</li>
               </ul>
             </li>
 
@@ -755,10 +760,15 @@
               <div class="project-content">
                 <div class="project-images">
                   <video controls muted data-playback-speed="1.5" preload="auto">
-                    <source src="./assets/videos/machine-tending.mp4" type="video/mp4">
+                    <source src="./assets/videos/machine-tending-1.mp4" type="video/mp4">
                     Your browser does not support the video tag.
                   </video>
-                  <img src="./assets/images/project-1.jpg" alt="Mechanical Component Design" loading="lazy">
+                  <img src="./assets/images/machine-tending-2.PNG" alt="render" loading="lazy">
+                  <img src="./assets/images/machine-tending-3.png" alt="lathe stock grippers" loading="lazy">
+                  <img src="./assets/images/machine-tending-4.png" alt="mill stock grippers" loading="lazy">
+                  <img src="./assets/images/machine-tending-2.PNG" alt="render" loading="lazy">
+                  <img src="./assets/images/machine-tending-3.png" alt="lathe stock grippers" loading="lazy">
+                  <img src="./assets/images/machine-tending-4.png" alt="mill stock grippers" loading="lazy">
                   <!-- Add more images as needed -->
                 </div>
                 <div class="project-details">
@@ -767,23 +777,78 @@
                     <p class="project-category">RJ Machine | Precision Machining</p>
                     <p class="project-date">July 2024</p>
                   </div>
-                  <p class="project-description-summary">I set up and programmed a CB3 cobot arm to load and unload a 2-axis CNC lathe. As a result, I increased daily machining time by over 50%. This effort involved:</p>
+                  <p class="project-description-summary">
+                    Programmed a CB3 collaborative robot arm to automate loading and unloading of a 2-axis CNC lathe, increasing daily machining uptime by over 50%. 
+                    Project included mechanical integration, jaw design, custom GCODE, and pneumatic control systems.</p>
                   <ul class="project-description">
-                    <li>Designed custom jaws for blank and finished part geometry.</li>
-                    <li>Created a parametric model for the jaws, streamlining adjustments and customizations.</li>
-                    <li>Wirelessly 3D printed the jaws using Bambu Lab P1P with custom parameters, made from PETG.</li>
-                    <li>Implemented a spring-loaded jaw function to ensure consistent and distributed loading of blank parts.</li>
-                    <li>Added custom GCODE for seamless communication between the cobot arm and CNC lathe.</li>
-                    <li>Enabled the cobot to control the chuck and door via a pneumatic piston.</li>
+                    <li>Designed and 3D printed custom PETG jaws optimized for both blank and finished part geometries using the Bambu Lab P1P.</li>
+                    <li>Built a parametric jaw model to enable quick design iterations and custom-fit adjustments.</li>
+                    <li>Integrated a spring-loaded mechanism for uniform pressure distribution on blanks during loading.</li>
+                    <li>Wrote custom GCODE scripts for precise synchronization between the cobot and CNC lathe.</li>
+                    <li>Automated the chuck and enclosure door using cobot-triggered pneumatic pistons.</li>
                   </ul>
                   <p class="project-considerations-title">Future Considerations</p>
                   <ul class="project-considerations">
-                    <li>Optimize cobot arm movements for speed.</li>
-                    <li>Created a parametric model for the jaws, streamlining adjustments and customizations.</li>
-                    <li>Wirelessly 3D printed the jaws using Bambu Lab P1P with custom parameters, made from PETG.</li>
-                    <li>Implemented a spring-loaded jaw function to ensure consistent and distributed loading of blank parts.</li>
-                    <li>Added custom GCODE for seamless communication between the cobot arm and CNC lathe.</li>
-                    <li>Enabled the cobot to control the chuck and door via a pneumatic piston.</li>
+                    <li>Optimize cobot pathing to reduce cycle time and increase throughput.</li>
+                    <li>Add part presence sensors for feedback and safety redundancy.</li>
+                    <li>Implement a parts bin or conveyor system for extended unattended runtime.</li>
+                    <li>Develop a quick-swap fixture system for different part geometries.</li>
+                  </ul>
+                </div>
+              </div>
+            </li>
+
+            <li class="divider"></li> <!-- Divider placeholder -->
+      
+            <li class="project-item active" data-filter-item data-category="work">
+              <div class="project-content">
+                <div class="project-images">
+                  <img src="./assets/images/erp-1.png" alt="workstation" loading="lazy">
+                  <img src="./assets/images/erp-2.png" alt="workstation" loading="lazy">
+                  <img src="./assets/images/erp-1.png" alt="workstation" loading="lazy">
+                  <!-- Add more images as needed -->
+                </div>
+                <div class="project-details">
+                  <h3 class="project-title">ERP System Installation</h3>  
+                  <div class="project-subtitle">
+                    <p class="project-category">RJ Machine | Precision Machining</p>
+                    <p class="project-date">July 2024</p>
+                  </div>
+                  <p class="project-description-summary">Led the deployment of ProShop ERP workstations at 17 CNC machines and 2 shipping stations, enhancing production visibility and operator efficiency.</p>
+                  <ul class="project-description">
+                    <li>Installed and configured industrial workstations including monitors, mounts, keyboards, mice, and cable management hardware.</li>
+                    <li>Reformatted PCs with a clean Windows installation to ensure performance and reliability.</li>
+                    <li>Installed and configured ProShop ERP for real-time job tracking, inventory access, and document control at point-of-use.</li>
+                    <li>Trained operators on key ERP features to maximize adoption and reduce onboarding friction.</li>
+                  </ul>
+                </div>
+              </div>
+            </li>
+
+            <li class="divider"></li> <!-- Divider placeholder -->
+
+            <li class="project-item active" data-filter-item data-category="school">
+              <div class="project-content">
+                <div class="project-images">
+                  <img src="./assets/images/project-3.jpg" alt="Mechanical Component Design" loading="lazy">
+                  <img src="./assets/images/project-3.jpg" alt="Mechanical Component Design" loading="lazy">
+                  <img src="./assets/images/project-3.jpg" alt="Mechanical Component Design" loading="lazy">
+                  <img src="./assets/images/project-3.jpg" alt="Mechanical Component Design" loading="lazy">
+                  <!-- Add more images as needed -->
+                </div>
+                <div class="project-details">
+                  <h3 class="project-title">Fixture Design</h3>  
+                  <div class="project-subtitle">
+                    <p class="project-category">RJ Machine | Precision Machining</p>
+                    <p class="project-date">July 2024</p>
+                  </div>
+                  <p class="project-description-summary">Designed a custom fixture to secure titanium marine components for precision milling, improving machining efficiency and part quality.</p>
+                  <ul class="project-description">
+                    <li>Engineered a dual-part fixture to evenly distribute vise pressure and reduce cycle time.</li>
+                    <li>Secured post-lathe components for secondary milling with high repeatability.</li>
+                    <li>Integrated locating features aligned to critical datum surfaces to ensure dimensional accuracy.</li>
+                    <li>Used protective, non-marring materials to prevent damage to titanium surfaces.</li>
+                    <li>Modeled fixture and components from detailed engineering drawings using Fusion 360.</li>
                   </ul>
                 </div>
               </div>
@@ -795,73 +860,53 @@
               <div class="project-content">
                 <div class="project-images">
                   <img src="./assets/images/project-3.jpg" alt="Mechanical Component Design" loading="lazy">
-                  <!-- Add more images as needed -->
-                </div>
-                <div class="project-details">
-                  <h3 class="project-title">ERP System Installation</h3>  
-                  <div class="project-subtitle">
-                    <p class="project-category">RJ Machine | Precision Machining</p>
-                    <p class="project-date">July 2024</p>
-                  </div>
-                  <p class="project-description-summary">I spearheaded the installation of customized computer workstations at each machine, which included:</p>
-                  <ul class="project-description">
-                    <li>Set up monitors, stands, keyboards, mice mounts, computer mounts, and managed cables.</li>
-                    <li>Reformatted computers for a fresh Windows installation.</li>
-                    <li>Installed ERP software on each machine.</li>
-                    <li>Trained operators on key ERP functions to ensure smooth operation.</li>
-                  </ul>
-                </div>
-              </div>
-            </li>
-
-            <li class="divider"></li> <!-- Divider placeholder -->
-
-            <li class="project-item active" data-filter-item data-category="school">
-              <div class="project-content">
-                <div class="project-images">
+                  <img src="./assets/images/project-3.jpg" alt="Mechanical Component Design" loading="lazy">
+                  <img src="./assets/images/project-3.jpg" alt="Mechanical Component Design" loading="lazy">
                   <img src="./assets/images/project-3.jpg" alt="Mechanical Component Design" loading="lazy">
                   <!-- Add more images as needed -->
                 </div>
                 <div class="project-details">
-                  <h3 class="project-title">Fixture Design</h3>  
+                  <h3 class="project-title">Energy Longboard</h3>  
                   <div class="project-subtitle">
-                    <p class="project-category">RJ Machine | Precision Machining</p>
-                    <p class="project-date">July 2024</p>
+                    <p class="project-category">Sports Product Development Club</p>
+                    <p class="project-date">Jan 2023 -  Jun 2023</p>
                   </div>
-                  <p class="project-description-summary">I designed a fixture to hold titanium marine parts for milling operations, emphasizing:</p>
+                    <p class="project-description-summary">I led the design and engineering of an electric longboard that generates and stores energy, integrating custom hardware and energy conversion systems.</p>
                   <ul class="project-description">
-                    <li>Held two parts, evenly distributing vise load and optimizing machine time.</li>
-                    <li>Securely held turned parts from lathes for precision milling.</li>
-                    <li>Incorporated locating features to prioritize critical functionalities and precision.</li>
-                    <li>Used non-damaging materials to protect the part.</li>
-                    <li>Modeled the part based on detailed engineering drawings.</li>
+                    <li>Developed and validated an AC-to-DC charging circuit to store generated energy from the drivetrain.</li>
+                    <li>Built a custom longboard deck using multi-layer wood layup and manual shaping techniques.</li>
+                    <li>Designed a reverse drivetrain system in SolidWorks to convert mechanical motion into electrical energy.</li>
+                    <li>Prototyped and iterated an air-cooled enclosure for electronics.</li>
                   </ul>
                 </div>
               </div>
             </li>
 
             <li class="divider"></li> <!-- Divider placeholder -->
-
-            <li class="project-item active" data-filter-item data-category="personal">
+      
+            <li class="project-item active" data-filter-item data-category="school">
               <div class="project-content">
                 <div class="project-images">
-                  <img src="./assets/images/project-4.png" alt="Mechanical Component Design" loading="lazy">
+                  <img src="./assets/images/project-3.jpg" alt="Mechanical Component Design" loading="lazy">
+                  <img src="./assets/images/project-3.jpg" alt="Mechanical Component Design" loading="lazy">
+                  <img src="./assets/images/project-3.jpg" alt="Mechanical Component Design" loading="lazy">
+                  <img src="./assets/images/project-3.jpg" alt="Mechanical Component Design" loading="lazy">
+                  <img src="./assets/images/project-3.jpg" alt="Mechanical Component Design" loading="lazy">
                   <!-- Add more images as needed -->
                 </div>
                 <div class="project-details">
-                  <h3 class="project-title">CB3 Machine Tending</h3>  
+                  <h3 class="project-title">Automatic Baseball Feeder</h3>  
                   <div class="project-subtitle">
-                    <p class="project-category">RJ Machine | Precision Machining</p>
-                    <p class="project-date">July 2024</p>
+                    <p class="project-category">Sports Product Development Club</p>
+                    <p class="project-date">Sep 2021 -  Jun 2022</p>
                   </div>
-                  <p class="project-description-summary">I set up and programmed a CB3 cobot arm to load and unload a 2-axis CNC lathe. As a result, I increased daily machining time by over 50%.</p>
+                    <p class="project-description-summary">Collaborated with OSU Baseball to design an automated feeder for their BP3 pitching machine. 
+                      I led the development of the electronics housing and contributed to the attachment mechanism for machine integration.</p>
                   <ul class="project-description">
-                    <li>Designed custom jaws for blank and finished part geometry.</li>
-                    <li>Created a parametric model for the jaws, streamlining adjustments and customizations.</li>
-                    <li>Wirelessly 3D printed the jaws using Bambu Lab P1P with custom parameters, made from PETG.</li>
-                    <li>Implemented a spring-loaded jaw function to ensure consistent and distributed loading of blank parts.</li>
-                    <li>Added custom GCODE for seamless communication between the cobot arm and CNC lathe.</li>
-                    <li>Enabled the cobot to control the chuck and door via a pneumatic piston.</li>
+                    <li>Designed and iterated a protective housing for electronics, ensuring fit, ventilation, and accessibility.</li>
+                    <li>Integrated core components including an Arduino UNO R3, motor driver, power supply, control inputs, and internal wiring.</li>
+                    <li>Assisted the integration team in designing a secure attachment mechanism for seamless feeder-to-machine connection.</li>
+                    <li>Enabled socially distanced training with remote activation of a 10-ball feeder system.</li>
                   </ul>
                 </div>
               </div>
