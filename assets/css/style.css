@@ -338,6 +338,15 @@ article.active {
 
 .has-scrollbar::-webkit-scrollbar-button { width: 20px; }
 
+video:fullscreen,
+video:-webkit-full-screen,
+video:-moz-full-screen {
+  width: 100% !important;
+  height: auto !important;
+  max-height: 100vh !important;
+  object-fit: contain;
+  background: black;
+}
 
 
 
@@ -999,7 +1008,7 @@ main {
 
 .project-images img,
 .project-images video {
-  max-height: 200px;
+  max-height: 400px;
   width: auto;
   height: auto;
   object-fit: cover;
@@ -1774,7 +1783,7 @@ main {
   
   .project-images img,
   .project-images video {
-    max-height: 200px;
+    max-height: none;
     width: auto;
     height: auto;
     object-fit: cover;

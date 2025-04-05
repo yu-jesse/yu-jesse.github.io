@@ -110,19 +110,6 @@ const filterFunc = (selectedValue) => {
 
 filterFunc("all");
 
-// Contact form
-const form = document.querySelector("[data-form]");
-const formInputs = document.querySelectorAll("[data-form-input]");
-const formBtn = document.querySelector("[data-form-btn]");
-
-if (form && formInputs && formBtn) {
-  formInputs.forEach((input) => {
-    input.addEventListener("input", () => {
-      formBtn.disabled = !form.checkValidity();
-    });
-  });
-}
-
 // Navigation
 const navigationLinks = document.querySelectorAll("[data-nav-link]");
 const pages = document.querySelectorAll("[data-page]");
@@ -133,7 +120,16 @@ const showPage = (pageName) => {
     page.classList.toggle("active", isActive);
     navigationLinks[i].classList.toggle("active", isActive);
   });
+
+  // Ensure scroll position is reset to top
   window.scrollTo(0, 0);
+
+  // If "projects" page was selected, re-adjust heights
+  if (pageName === "projects") {
+    waitForProjectImagesToLoad(() => {
+      adjustProjectImageHeights();
+    });
+  }
 };
 
 const lastSelectedPage = localStorage.getItem("lastSelectedPage") || "projects";
@@ -171,6 +167,15 @@ if (projectImages.length > 0) {
   });
 }
 
+// Close modal on Escape key press
+document.addEventListener("keydown", (event) => {
+  const isModalOpen = modalContainer.classList.contains("active");
+  if (event.key === "Escape" && isModalOpen) {
+    closeModal();
+  }
+});
+
+// Close modal on overlay click
 modalContainer.addEventListener("click", closeModal);
 
 // Playback speed for videos
@@ -200,29 +205,61 @@ if (themeToggle) {
   });
 }
 
-// === Adjust Project Image Heights Per Item ===
+// === Adjust Project Image Heights Robustly ===
 function adjustProjectImageHeights() {
-  requestAnimationFrame(() => {
-    document.querySelectorAll(".project-item").forEach(item => {
-      const image = item.querySelector(".project-images");
-      const details = item.querySelector(".project-details");
+  const items = document.querySelectorAll(".project-item");
+  items.forEach(item => {
+    const image = item.querySelector(".project-images");
+    const details = item.querySelector(".project-details");
 
-      if (image && details) {
-        const height = details.getBoundingClientRect().height;
-        image.style.height = `${height}px`;
-      }
-    });
+    if (image && details) {
+      const height = details.getBoundingClientRect().height;
+      image.style.height = `${height}px`;
+    }
   });
 }
 
-// Call this function after content loads and on window resize
+// Ensure images are fully loaded before measuring
+function waitForProjectImagesToLoad(callback) {
+  const images = document.querySelectorAll(".project-images img");
+  let loadedCount = 0;
+  const total = images.length;
+
+  if (total === 0) {
+    requestAnimationFrame(callback); // no images, safe to go
+    return;
+  }
+
+  images.forEach((img) => {
+    const checkDone = () => {
+      loadedCount++;
+      if (loadedCount === total) {
+        // Allow one more repaint cycle
+        requestAnimationFrame(() => {
+          setTimeout(callback, 20); // gentle delay
+        });
+      }
+    };
+
+    if (img.complete) {
+      checkDone();
+    } else {
+      img.addEventListener("load", checkDone);
+      img.addEventListener("error", checkDone);
+    }
+  });
+}
+
+// Call once everything is loaded
 window.addEventListener("load", () => {
-  setTimeout(adjustProjectImageHeights, 300);
+  waitForProjectImagesToLoad(() => {
+    adjustProjectImageHeights();
+  });
 });
 
+// Resize debounce
 let resizeTimeout;
 window.addEventListener("resize", () => {
   clearTimeout(resizeTimeout);
   resizeTimeout = setTimeout(adjustProjectImageHeights, 150);
 });
-
