@@ -1,47 +1,27 @@
 'use strict';
 
-// Element toggle function
+// === Modal State ===
+let modalImageList = [];
+let currentImageIndex = -1;
+// === Touch Events for Mobile ===
+let touchStartX = 0;
+let touchEndX = 0;
+
+// === Utility Functions ===
 const elementToggleFunc = (elem) => elem.classList.toggle("active");
 
-// Sidebar toggle
+// === Sidebar Toggle ===
 const sidebar = document.querySelector("[data-sidebar]");
 const sidebarBtn = document.querySelector("[data-sidebar-btn]");
 if (sidebar && sidebarBtn) {
   sidebarBtn.addEventListener("click", () => elementToggleFunc(sidebar));
 }
 
-// Hobbies modal
-const hobbiesItem = document.querySelectorAll("[data-hobbies-item]");
+// === Modal Elements ===
 const modalContainer = document.querySelector(".modal-container");
-const modalImage = document.querySelector(".modal-image");
 const modalContent = document.querySelector(".modal-content");
-const modalImg = document.querySelector("[data-modal-img]");
-const modalTitle = document.querySelector("[data-modal-title]");
-const modalText = document.querySelector("[data-modal-text]");
-const modalCloseBtn = document.querySelector("[data-modal-close-btn]");
-const overlay = document.querySelector("[data-overlay]");
 
-const hobbiesModalFunc = () => {
-  modalContainer.classList.toggle("active");
-  overlay.classList.toggle("active");
-};
-
-if (hobbiesItem.length > 0) {
-  hobbiesItem.forEach((item) => {
-    item.addEventListener("click", () => {
-      modalImg.src = item.querySelector("[data-hobbies-avatar]").src;
-      modalImg.alt = item.querySelector("[data-hobbies-avatar]").alt;
-      modalTitle.innerHTML = item.querySelector("[data-hobbies-title]").innerHTML;
-      modalText.innerHTML = item.querySelector("[data-hobbies-text]").innerHTML;
-      hobbiesModalFunc();
-    });
-  });
-
-  modalCloseBtn.addEventListener("click", hobbiesModalFunc);
-  overlay.addEventListener("click", hobbiesModalFunc);
-}
-
-// Filter dropdown and buttons
+// === Filter Buttons & Dropdown ===
 const select = document.querySelector("[data-select]");
 const selectItems = document.querySelectorAll("[data-select-item]");
 const selectValue = document.querySelector("[data-select-value]");
@@ -50,7 +30,6 @@ const filterItems = document.querySelectorAll("[data-filter-item]");
 
 if (select && selectItems && selectValue) {
   select.addEventListener("click", () => elementToggleFunc(select));
-
   selectItems.forEach((item) => {
     item.addEventListener("click", () => {
       const selectedValue = item.innerText.toLowerCase();
@@ -76,9 +55,10 @@ if (filterBtn.length > 0) {
   });
 }
 
+// === Filter Project Items ===
 const filterFunc = (selectedValue) => {
   const dividers = document.querySelectorAll(".divider");
-  dividers.forEach((divider) => divider.style.display = "none");
+  dividers.forEach((divider) => (divider.style.display = "none"));
 
   const visibleItems = [];
   filterItems.forEach((item) => {
@@ -105,12 +85,12 @@ const filterFunc = (selectedValue) => {
     }
   });
 
-  adjustProjectImageHeights(); // Fix height after filtering
+  adjustProjectImageHeights();
 };
 
 filterFunc("all");
 
-// Navigation
+// === Navigation (About / Resume / Projects etc.) ===
 const navigationLinks = document.querySelectorAll("[data-nav-link]");
 const pages = document.querySelectorAll("[data-page]");
 
@@ -121,10 +101,8 @@ const showPage = (pageName) => {
     navigationLinks[i].classList.toggle("active", isActive);
   });
 
-  // Ensure scroll position is reset to top
   window.scrollTo(0, 0);
 
-  // If "projects" page was selected, re-adjust heights
   if (pageName === "projects") {
     waitForProjectImagesToLoad(() => {
       adjustProjectImageHeights();
@@ -143,42 +121,103 @@ navigationLinks.forEach((link) => {
   });
 });
 
-// Project modal
-const openModal = (src, alt, maxWidth = "90%", maxHeight = "90%") => {
-  modalImage.src = src;
-  modalImage.alt = alt || "";
-  modalContent.style.setProperty("--modal-max-width", maxWidth);
-  modalContent.style.setProperty("--modal-max-height", maxHeight);
-  modalContainer.classList.add("active");
-};
+// === Modal Functions ===
+function openModal(src, alt) {
+  console.log("Opening modal for:", src);
 
-const closeModal = () => {
-  modalContainer.classList.remove("active");
-  modalImage.src = "";
-  modalImage.alt = "";
-};
+  modalContent.innerHTML = `
+    <span class="modal-arrow modal-prev" onclick="showPreviousImage()">&#10094;</span>
+    <img src="${src}" alt="${alt || ""}" style="max-width: 90vw; max-height: 90vh; object-fit: contain; border-radius: 8px;">
+    <span class="modal-arrow modal-next" onclick="showNextImage()">&#10095;</span>
+  `;
 
-const projectImages = document.querySelectorAll(".project-images img, .project-images video");
-if (projectImages.length > 0) {
-  projectImages.forEach((media) => {
-    media.addEventListener("click", () => {
-      openModal(media.src, media.alt, "80%", "80%");
-    });
+  modalContent.querySelectorAll('.modal-arrow').forEach(arrow => {
+    arrow.addEventListener('click', (e) => e.stopPropagation());
   });
+
+
+  modalContainer.classList.add("active");
 }
 
-// Close modal on Escape key press
+
+const closeModal = () => {
+  modalContainer.classList.add("closing");
+
+  setTimeout(() => {
+    modalContainer.classList.remove("active", "closing");
+    modalContent.innerHTML = "";
+  }, 300);
+};
+
+function isMobile() {
+  return window.innerWidth <= 768;
+}
+
+function showNextImage() {
+  if (isMobile()) return; // disable on mobile
+  if (currentImageIndex < modalImageList.length - 1) {
+    currentImageIndex++;
+    const img = modalImageList[currentImageIndex];
+    openModal(img.src, img.alt);
+  }
+}
+
+function showPreviousImage() {
+  if (isMobile()) return; // disable on mobile
+  if (currentImageIndex > 0) {
+    currentImageIndex--;
+    const img = modalImageList[currentImageIndex];
+    openModal(img.src, img.alt);
+  }
+}
+
+
+// === Image Click → Open Modal ===
+const projectImages = document.querySelectorAll(".project-images img");
+
+projectImages.forEach((img) => {
+  img.addEventListener("click", () => {
+    const projectItem = img.closest(".project-item");
+    modalImageList = Array.from(projectItem.querySelectorAll(".project-images img"));
+    currentImageIndex = modalImageList.indexOf(img);
+    openModal(img.src, img.alt);
+  });
+});
+
+// === Arrow Key Navigation in Modal ===
 document.addEventListener("keydown", (event) => {
   const isModalOpen = modalContainer.classList.contains("active");
-  if (event.key === "Escape" && isModalOpen) {
+  if (!isModalOpen) return;
+
+  if (event.key === "Escape") {
     closeModal();
+  } else if (event.key === "ArrowLeft") {
+    showPreviousImage();
+  } else if (event.key === "ArrowRight") {
+    showNextImage();
   }
 });
 
-// Close modal on overlay click
+function showNextImage() {
+  if (currentImageIndex < modalImageList.length - 1) {
+    currentImageIndex++;
+    const img = modalImageList[currentImageIndex];
+    openModal(img.src, img.alt);
+  }
+}
+
+function showPreviousImage() {
+  if (currentImageIndex > 0) {
+    currentImageIndex--;
+    const img = modalImageList[currentImageIndex];
+    openModal(img.src, img.alt);
+  }
+}
+
+// === Close Modal on Overlay Click ===
 modalContainer.addEventListener("click", closeModal);
 
-// Playback speed for videos
+// === Video Playback Speed ===
 const setPlaybackSpeed = () => {
   const projectVideos = document.querySelectorAll(".project-images video");
   projectVideos.forEach((video) => {
@@ -187,9 +226,40 @@ const setPlaybackSpeed = () => {
   });
 };
 
-document.addEventListener("DOMContentLoaded", setPlaybackSpeed);  
+modalContainer.addEventListener("touchstart", (e) => {
+  touchStartX = e.changedTouches[0].screenX;
+}, false);
 
-// Theme toggle
+modalContainer.addEventListener("touchend", (e) => {
+  touchEndX = e.changedTouches[0].screenX;
+  handleSwipeGesture();
+}, false);
+
+function handleSwipeGesture() {
+  if (Math.abs(touchStartX - touchEndX) < 50) return; // minimal movement
+
+  if (touchEndX < touchStartX && currentImageIndex < modalImageList.length - 1) {
+    // Swipe left
+    currentImageIndex++;
+    const img = modalImageList[currentImageIndex];
+    openModal(img.src, img.alt);
+  }
+
+  if (touchEndX > touchStartX && currentImageIndex > 0) {
+    // Swipe right
+    currentImageIndex--;
+    const img = modalImageList[currentImageIndex];
+    openModal(img.src, img.alt);
+  }
+}
+
+// === DOM Ready Logic ===
+document.addEventListener("DOMContentLoaded", () => {
+  setPlaybackSpeed();
+  fixVideoAspectRatio();
+});
+
+// === Theme Toggle ===
 const themeToggle = document.getElementById("theme-toggle");
 if (themeToggle) {
   const currentTheme = localStorage.getItem("theme");
@@ -205,7 +275,7 @@ if (themeToggle) {
   });
 }
 
-// === Adjust Project Image Heights Robustly ===
+// === Adjust Project Image Heights ===
 function adjustProjectImageHeights() {
   const items = document.querySelectorAll(".project-item");
   items.forEach(item => {
@@ -219,14 +289,14 @@ function adjustProjectImageHeights() {
   });
 }
 
-// Ensure images are fully loaded before measuring
+// === Wait for Images to Load ===
 function waitForProjectImagesToLoad(callback) {
   const images = document.querySelectorAll(".project-images img");
   let loadedCount = 0;
   const total = images.length;
 
   if (total === 0) {
-    requestAnimationFrame(callback); // no images, safe to go
+    requestAnimationFrame(callback);
     return;
   }
 
@@ -234,9 +304,8 @@ function waitForProjectImagesToLoad(callback) {
     const checkDone = () => {
       loadedCount++;
       if (loadedCount === total) {
-        // Allow one more repaint cycle
         requestAnimationFrame(() => {
-          setTimeout(callback, 20); // gentle delay
+          setTimeout(callback, 20);
         });
       }
     };
@@ -250,16 +319,24 @@ function waitForProjectImagesToLoad(callback) {
   });
 }
 
-// Call once everything is loaded
+// === Initial Image Height Adjustment ===
 window.addEventListener("load", () => {
   waitForProjectImagesToLoad(() => {
     adjustProjectImageHeights();
   });
 });
 
-// Resize debounce
+// === Resize Debounce for Image Heights ===
 let resizeTimeout;
 window.addEventListener("resize", () => {
   clearTimeout(resizeTimeout);
   resizeTimeout = setTimeout(adjustProjectImageHeights, 150);
 });
+
+// === Video Aspect Ratio Fix ===
+const fixVideoAspectRatio = () => {
+  const projectVideos = document.querySelectorAll(".project-images video");
+  projectVideos.forEach((video) => {
+    video.style.objectFit = "contain";
+  });
+};
