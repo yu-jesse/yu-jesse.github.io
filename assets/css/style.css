@@ -1173,8 +1173,33 @@ main {
   display: block;
 }
 
-.modal-arrow {
-  display: none;
+.modal-content.swipe-left img,
+.modal-content.swipe-right img {
+  transition: transform 0.3s ease;
+}
+
+.modal-content.swipe-left img {
+  transform: translateX(-100%);
+}
+
+.modal-content.swipe-right img {
+  transform: translateX(100%);
+}
+
+body.modal-open {
+  position: fixed;
+  width: 100%;
+  overflow: hidden;
+  height: 100vh;
+}
+
+.modal-open #page-wrap {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+  width: 100%;
 }
 
 /* Animation keyframes */
@@ -1892,6 +1917,11 @@ main {
     z-index: 999;
     transition: background-color 0.2s ease;
     animation: fadeInScale 0.2s ease forwards;
+    transition: opacity 0.2s ease;  
+  }
+
+  .modal-arrow.disabled {
+    display: none
   }
   
   .modal-prev {

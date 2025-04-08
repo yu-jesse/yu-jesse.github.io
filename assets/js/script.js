@@ -7,6 +7,9 @@ let currentImageIndex = -1;
 let touchStartX = 0;
 let touchEndX = 0;
 
+let scrollPosition = 0;
+const pageWrap = document.getElementById('page-wrap');
+
 // === Utility Functions ===
 const elementToggleFunc = (elem) => elem.classList.toggle("active");
 
@@ -123,32 +126,60 @@ navigationLinks.forEach((link) => {
 
 // === Modal Functions ===
 function openModal(src, alt) {
-  console.log("Opening modal for:", src);
+  const isFirstOpen = !modalContainer.classList.contains("active");
+
+  if (isFirstOpen) {
+    scrollPosition = window.scrollY;
+    pageWrap.style.top = `-${scrollPosition}px`;
+    document.body.classList.add("modal-open");
+  }
 
   modalContent.innerHTML = `
     <span class="modal-arrow modal-prev" onclick="showPreviousImage()">&#10094;</span>
     <img src="${src}" alt="${alt || ""}" style="max-width: 90vw; max-height: 90vh; object-fit: contain; border-radius: 8px;">
     <span class="modal-arrow modal-next" onclick="showNextImage()">&#10095;</span>
   `;
+  
+  const prevArrow = modalContent.querySelector('.modal-prev');
+  const nextArrow = modalContent.querySelector('.modal-next');
 
+  // Disable arrows at edges
+  if (currentImageIndex === 0) {
+    prevArrow.classList.add("disabled");
+  }
+  if (currentImageIndex === modalImageList.length - 1) {
+    nextArrow.classList.add("disabled");
+  }
+
+  // Prevent arrow click from bubbling
   modalContent.querySelectorAll('.modal-arrow').forEach(arrow => {
     arrow.addEventListener('click', (e) => e.stopPropagation());
   });
 
 
   modalContainer.classList.add("active");
+
+  // Prevent arrow click from closing modal
+  modalContent.querySelectorAll('.modal-arrow').forEach(arrow => {
+  arrow.addEventListener('click', (e) => e.stopPropagation());
+});
 }
 
 
-const closeModal = () => {
+function closeModal() {
   modalContainer.classList.add("closing");
 
   setTimeout(() => {
     modalContainer.classList.remove("active", "closing");
     modalContent.innerHTML = "";
-  }, 300);
-};
 
+    // Restore scroll position
+    document.body.classList.remove("modal-open");
+    pageWrap.style.top = "";
+    window.scrollTo(0, scrollPosition);
+
+  }, 300);
+}
 function isMobile() {
   return window.innerWidth <= 768;
 }
@@ -236,21 +267,31 @@ modalContainer.addEventListener("touchend", (e) => {
 }, false);
 
 function handleSwipeGesture() {
-  if (Math.abs(touchStartX - touchEndX) < 50) return; // minimal movement
+  if (Math.abs(touchStartX - touchEndX) < 50) return;
 
-  if (touchEndX < touchStartX && currentImageIndex < modalImageList.length - 1) {
-    // Swipe left
-    currentImageIndex++;
-    const img = modalImageList[currentImageIndex];
-    openModal(img.src, img.alt);
-  }
+  const direction = touchEndX < touchStartX ? 'left' : 'right';
 
-  if (touchEndX > touchStartX && currentImageIndex > 0) {
-    // Swipe right
-    currentImageIndex--;
-    const img = modalImageList[currentImageIndex];
+  const canGoNext = direction === 'left' && currentImageIndex < modalImageList.length - 1;
+  const canGoPrev = direction === 'right' && currentImageIndex > 0;
+
+  if (!canGoNext && !canGoPrev) return;
+
+  const newIndex = currentImageIndex + (direction === 'left' ? 1 : -1);
+  const img = modalImageList[newIndex];
+
+  // Add animation class
+  modalContent.classList.add(`swipe-${direction}`);
+
+  // Wait for transition then update image
+  setTimeout(() => {
+    currentImageIndex = newIndex;
     openModal(img.src, img.alt);
-  }
+
+    // Remove swipe class after new modal opens
+    setTimeout(() => {
+      modalContent.classList.remove(`swipe-${direction}`);
+    }, 300);
+  }, 50);
 }
 
 // === DOM Ready Logic ===
