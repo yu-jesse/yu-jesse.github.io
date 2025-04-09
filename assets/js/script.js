@@ -284,11 +284,8 @@ function handleSwipeGesture() {
   // Vertical swipe detection
   if (Math.abs(deltaY) > Math.abs(deltaX) && Math.abs(deltaY) > 50 && deltaY > 0) {
     // Swipe down
-    modalContent.classList.add("swipe-down");
-    setTimeout(() => {
-      closeModal();
-      modalContent.classList.remove("swipe-down");
-    }, 300);
+    modalContainer.classList.add("swipe-down");
+    setTimeout(closeModal, 300); // Match the timeout with the CSS transition duration
   }
 }
 

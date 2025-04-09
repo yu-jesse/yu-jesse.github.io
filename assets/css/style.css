@@ -1133,17 +1133,18 @@ main {
   color: var(--primary-color);
 }
 
+/* === Modal Container === */
 .modal-container {
   position: fixed;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
+  background-color: rgba(0, 0, 0, 0);
   opacity: 0;
+  z-index: 1000;
+  pointer-events: none;
   transition: background-color 0.3s ease, opacity 0.3s ease;
-  pointer-events: none; /* Prevent interaction until active */
 }
 
 .modal-container.active {
@@ -1152,6 +1153,12 @@ main {
   pointer-events: auto;
 }
 
+.modal-container.closing {
+  background-color: rgba(0, 0, 0, 0);
+  opacity: 0;
+}
+
+/* === Modal Content === */
 .modal-content {
   position: relative;
   display: flex;
@@ -1159,69 +1166,37 @@ main {
   align-items: center;
   max-width: 90vw;
   max-height: 90vh;
-  background: transparent;
   padding: 0;
   overflow: hidden;
+  background: transparent;
+  border-radius: 8px;
   animation: fadeInScale 0.2s ease forwards;
   transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
-.modal-content img {
+.modal-content img,
+.modal-content video {
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
-  border-radius: 8px;
   display: block;
+  border-radius: 8px;
 }
 
-.modal-content.swipe-left img,
-.modal-content.swipe-right img {
-  transition: transform 0.3s ease;
+/* === Swipe Animations === */
+.modal-content.swipe-left {
+  animation: swipeLeft 0.3s ease forwards;
 }
 
-.modal-content.swipe-left img {
-  transform: translateX(-100%);
+.modal-content.swipe-right {
+  animation: swipeRight 0.3s ease forwards;
 }
 
-.modal-content.swipe-right img {
-  transform: translateX(100%);
+.modal-container.swipe-down {
+  animation: swipeDown 0.3s ease forwards;
 }
 
-/* Swipe left animation */
-.swipe-left {
-  transform: translateX(-100%);
-  opacity: 0;
-}
-
-/* Swipe right animation */
-.swipe-right {
-  transform: translateX(100%);
-  opacity: 0;
-}
-
-/* Swipe down animation */
-.swipe-down {
-  transform: translateY(100%);
-  opacity: 0;
-}
-
-body.modal-open {
-  position: fixed;
-  width: 100%;
-  overflow: hidden;
-  height: 100vh;
-}
-
-.modal-open #page-wrap {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  overflow: hidden;
-  width: 100%;
-}
-
-/* Animation keyframes */
+/* === Keyframes === */
 @keyframes fadeInScale {
   from {
     opacity: 0;
@@ -1244,15 +1219,62 @@ body.modal-open {
   }
 }
 
-.modal-container.closing .modal-content {
-  animation: fadeOutScale 0.3s ease forwards;
-} 
-
-.modal-container.closing {
-  background-color: rgba(0, 0, 0, 0);
-  opacity: 0;
+@keyframes swipeLeft {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
 }
 
+@keyframes swipeRight {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+@keyframes swipeDown {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+}
+
+/* === Modal Close Button === */
+.modal-close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: var(--white-1);
+  border: none;
+  font-size: 1.5rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 8px;
+  cursor: pointer;
+  z-index: 999;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.2s ease;
+  animation: fadeInScale 0.2s ease forwards;
+}
+
+.modal-close-btn:hover {
+  background-color: rgba(0, 0, 0, 0.75);
+}
+
+/* === Modal Dots === */
 .modal-dots {
   position: absolute;
   bottom: 1rem;
@@ -1273,30 +1295,26 @@ body.modal-open {
 }
 
 .modal-dot.active {
-  background-color: white;
+  background-color: var(--white-1);
 }
 
-.modal-close-btn {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  background-color: rgba(0, 0, 0, 0.5);
-  color: orange;
-  border: none;
-  font-size: 1.5rem;
-  padding: 0.2rem 0.6rem;
-  border-radius: 8px;
-  cursor: pointer;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-  z-index: 999;
-  transition: background-color 0.2s ease;
-  animation: fadeInScale 0.2s ease forwards;
-  transition: opacity 0.2s ease;   
+/* === Body Scroll Lock === */
+body.modal-open {
+  position: fixed;
+  width: 100%;
+  overflow: hidden;
+  height: 100vh;
 }
 
-.modal-close-btn:hover {
-  background-color: rgba(0, 0, 0, 0.75);
+.modal-open #page-wrap {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+  width: 100%;
 }
+
 
 
 /* Resume-style bullet points */
@@ -1973,7 +1991,7 @@ body.modal-open {
     transform: translateY(-50%);
     font-size: 2.5rem;
     background-color: rgba(0, 0, 0, 0.5);
-    color: white;
+    color: var(--white-1);
     padding: 0.25rem 0.5rem;
     border-radius: 8px;
     cursor: pointer;
