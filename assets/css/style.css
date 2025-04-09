@@ -1163,6 +1163,7 @@ main {
   padding: 0;
   overflow: hidden;
   animation: fadeInScale 0.2s ease forwards;
+  transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
 .modal-content img {
@@ -1184,6 +1185,24 @@ main {
 
 .modal-content.swipe-right img {
   transform: translateX(100%);
+}
+
+/* Swipe left animation */
+.swipe-left {
+  transform: translateX(-100%);
+  opacity: 0;
+}
+
+/* Swipe right animation */
+.swipe-right {
+  transform: translateX(100%);
+  opacity: 0;
+}
+
+/* Swipe down animation */
+.swipe-down {
+  transform: translateY(100%);
+  opacity: 0;
 }
 
 body.modal-open {
