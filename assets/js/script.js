@@ -124,8 +124,43 @@ navigationLinks.forEach((link) => {
   });
 });
 
+// media.src
+function getMediaSrc(media) {
+  if (media.tagName.toLowerCase() === 'video') {
+    const source = media.querySelector('source');
+    return source?.src || media.getAttribute('src');
+  }
+  return media.src;
+}
+
+function addDotsNavigation() {
+  const dotsHTML = modalImageList.map((_, index) => {
+    const isActive = index === currentImageIndex ? "active" : "";
+    return `<span class="modal-dot ${isActive}" data-dot-index="${index}"></span>`;
+  }).join("");
+
+  const dotsWrapper = document.createElement("div");
+  dotsWrapper.classList.add("modal-dots");
+  dotsWrapper.innerHTML = dotsHTML;
+  modalContent.appendChild(dotsWrapper);
+
+  dotsWrapper.querySelectorAll(".modal-dot").forEach(dot => {
+    dot.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const targetIndex = parseInt(dot.dataset.dotIndex);
+      if (!isNaN(targetIndex)) {
+        currentImageIndex = targetIndex;
+        const media = modalImageList[currentImageIndex];
+        const mediaType = media.tagName.toLowerCase() === 'video' ? 'video' : 'image';
+        openModal(getMediaSrc(media), media.getAttribute('alt'), mediaType);
+      }
+    });
+  });
+}
+
+
 // === Modal Functions ===
-function openModal(src, alt) {
+function openModal(src, alt, type) {
   const isFirstOpen = !modalContainer.classList.contains("active");
 
   if (isFirstOpen) {
@@ -134,16 +169,26 @@ function openModal(src, alt) {
     document.body.classList.add("modal-open");
   }
 
+  let mediaElement;
+  if (type === 'video') {
+    mediaElement = `
+      <video controls muted style="max-width: 90vw; max-height: 90vh; object-fit: contain; border-radius: 8px;">
+        <source src="${src}" type="video/mp4">
+      </video>`;
+  } else {
+    mediaElement = `<img src="${src}" alt="${alt || ""}" style="max-width: 90vw; max-height: 90vh; object-fit: contain; border-radius: 8px;">`;
+  }
+
   modalContent.innerHTML = `
-    <span class="modal-arrow modal-prev" onclick="showPreviousImage()">&#10094;</span>
-    <img src="${src}" alt="${alt || ""}" style="max-width: 90vw; max-height: 90vh; object-fit: contain; border-radius: 8px;">
-    <span class="modal-arrow modal-next" onclick="showNextImage()">&#10095;</span>
+    <button class="modal-close-btn" aria-label="Close modal">&times;</button>
+    ${mediaElement}
+    <span class="modal-arrow modal-prev" onclick="showPreviousMedia(event)">&#10094;</span>
+    <span class="modal-arrow modal-next" onclick="showNextMedia(event)">&#10095;</span>
   `;
-  
+
   const prevArrow = modalContent.querySelector('.modal-prev');
   const nextArrow = modalContent.querySelector('.modal-next');
 
-  // Disable arrows at edges
   if (currentImageIndex === 0) {
     prevArrow.classList.add("disabled");
   }
@@ -151,69 +196,98 @@ function openModal(src, alt) {
     nextArrow.classList.add("disabled");
   }
 
-  // Prevent arrow click from bubbling
   modalContent.querySelectorAll('.modal-arrow').forEach(arrow => {
     arrow.addEventListener('click', (e) => e.stopPropagation());
   });
 
-
   modalContainer.classList.add("active");
 
-  // Prevent arrow click from closing modal
-  modalContent.querySelectorAll('.modal-arrow').forEach(arrow => {
-  arrow.addEventListener('click', (e) => e.stopPropagation());
-});
+  // Add event listener for close button
+  modalContent.querySelector(".modal-close-btn").addEventListener("click", closeModal);
+
+  addDotsNavigation();
 }
 
 
 function closeModal() {
+  const video = modalContent.querySelector("video");
+  if (video) video.pause();
+
   modalContainer.classList.add("closing");
 
   setTimeout(() => {
     modalContainer.classList.remove("active", "closing");
     modalContent.innerHTML = "";
 
-    // Restore scroll position
     document.body.classList.remove("modal-open");
     pageWrap.style.top = "";
     window.scrollTo(0, scrollPosition);
-
   }, 300);
 }
+
+
 function isMobile() {
   return window.innerWidth <= 768;
 }
 
-function showNextImage() {
-  if (isMobile()) return; // disable on mobile
+function showNextMedia(event) {
+  if (event) event.stopPropagation();
   if (currentImageIndex < modalImageList.length - 1) {
     currentImageIndex++;
-    const img = modalImageList[currentImageIndex];
-    openModal(img.src, img.alt);
+    const media = modalImageList[currentImageIndex];
+    const mediaType = media.tagName.toLowerCase() === 'video' ? 'video' : 'image';
+    openModal(getMediaSrc(media), media.getAttribute('alt'), mediaType);
   }
 }
 
-function showPreviousImage() {
-  if (isMobile()) return; // disable on mobile
+function showPreviousMedia(event) {
+  if (event) event.stopPropagation();
   if (currentImageIndex > 0) {
     currentImageIndex--;
-    const img = modalImageList[currentImageIndex];
-    openModal(img.src, img.alt);
+    const media = modalImageList[currentImageIndex];
+    const mediaType = media.tagName.toLowerCase() === 'video' ? 'video' : 'image';
+    openModal(getMediaSrc(media), media.getAttribute('alt'), mediaType);
   }
 }
 
-
 // === Image Click → Open Modal ===
-const projectImages = document.querySelectorAll(".project-images img");
+const projectMedia = document.querySelectorAll(".project-images img, .project-images video");
+modalImageList = Array.from(projectMedia);
 
-projectImages.forEach((img) => {
-  img.addEventListener("click", () => {
-    const projectItem = img.closest(".project-item");
-    modalImageList = Array.from(projectItem.querySelectorAll(".project-images img"));
-    currentImageIndex = modalImageList.indexOf(img);
-    openModal(img.src, img.alt);
-  });
+projectMedia.forEach((media) => {
+  if (media.tagName.toLowerCase() === 'video') {
+    // Add special click handler for videos
+    media.addEventListener("click", (e) => {
+      const rect = media.getBoundingClientRect();
+      const clickY = e.clientY - rect.top;
+
+      const isClickInControls = clickY > rect.height - 40; // estimate control height
+
+      if (!isClickInControls) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const projectItem = media.closest(".project-item");
+        modalImageList = Array.from(projectItem.querySelectorAll(".project-images img, .project-images video"));
+        currentImageIndex = modalImageList.indexOf(media);
+        const mediaType = 'video';
+        openModal(getMediaSrc(media), media.getAttribute('alt'), mediaType);
+      }
+      // else: allow the video to play normally
+    });
+  } else {
+    // For images
+    media.addEventListener("click", () => {
+      const projectItem = media.closest(".project-item");
+      modalImageList = Array.from(projectItem.querySelectorAll(".project-images img, .project-images video"));
+      currentImageIndex = modalImageList.indexOf(media);
+      const mediaType = 'image';
+      openModal(getMediaSrc(media), media.getAttribute('alt'), mediaType);
+    });
+  }
 });
+
+
 
 // === Arrow Key Navigation in Modal ===
 document.addEventListener("keydown", (event) => {
@@ -223,30 +297,27 @@ document.addEventListener("keydown", (event) => {
   if (event.key === "Escape") {
     closeModal();
   } else if (event.key === "ArrowLeft") {
-    showPreviousImage();
+    showPreviousMedia();
   } else if (event.key === "ArrowRight") {
-    showNextImage();
+    showNextMedia();
   }
 });
 
-function showNextImage() {
-  if (currentImageIndex < modalImageList.length - 1) {
-    currentImageIndex++;
-    const img = modalImageList[currentImageIndex];
-    openModal(img.src, img.alt);
-  }
-}
-
-function showPreviousImage() {
-  if (currentImageIndex > 0) {
-    currentImageIndex--;
-    const img = modalImageList[currentImageIndex];
-    openModal(img.src, img.alt);
-  }
-}
-
 // === Close Modal on Overlay Click ===
-modalContainer.addEventListener("click", closeModal);
+// modalContainer.addEventListener("click", closeModal);
+
+modalContainer.addEventListener("click", (event) => {
+  if (!event.target.closest(".modal-content")) {
+    closeModal();
+  }
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && modalContainer.classList.contains("active")) {
+    closeModal();
+  }
+});
+
 
 // === Video Playback Speed ===
 const setPlaybackSpeed = () => {
@@ -269,15 +340,17 @@ modalContainer.addEventListener("touchend", (e) => {
 function handleSwipeGesture() {
   if (Math.abs(touchStartX - touchEndX) < 50) return;
 
+  const media = modalImageList[newIndex];
+  const mediaType = media.tagName.toLowerCase() === 'video' ? 'video' : 'image';
+  openModal(getMediaSrc(media), media.getAttribute('alt'), mediaType);
+
   const direction = touchEndX < touchStartX ? 'left' : 'right';
 
-  const canGoNext = direction === 'left' && currentImageIndex < modalImageList.length - 1;
-  const canGoPrev = direction === 'right' && currentImageIndex > 0;
-
-  if (!canGoNext && !canGoPrev) return;
-
-  const newIndex = currentImageIndex + (direction === 'left' ? 1 : -1);
-  const img = modalImageList[newIndex];
+  if (direction === 'left') {
+    showNextMedia();
+  } else {
+    showPreviousMedia();
+  }
 
   // Add animation class
   modalContent.classList.add(`swipe-${direction}`);
@@ -293,6 +366,25 @@ function handleSwipeGesture() {
     }, 300);
   }, 50);
 }
+
+let touchStartY = 0;
+let touchEndY = 0;
+
+modalContainer.addEventListener("touchstart", (e) => {
+  touchStartY = e.changedTouches[0].screenY;
+}, false);
+
+modalContainer.addEventListener("touchend", (e) => {
+  touchEndY = e.changedTouches[0].screenY;
+  handleSwipeDownGesture();
+}, false);
+
+function handleSwipeDownGesture() {
+  if (touchEndY > touchStartY + 50) { // Detects a downward swipe of more than 50px
+    closeModal();
+  }
+}
+
 
 // === DOM Ready Logic ===
 document.addEventListener("DOMContentLoaded", () => {
