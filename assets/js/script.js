@@ -1,30 +1,30 @@
 'use strict';
 
-// === Modal State ===
+/* === Global Modal State === */
 let modalImageList = [];
 let currentImageIndex = -1;
-// === Touch Events for Mobile ===
-let touchStartX = 0;
-let touchEndX = 0;
 
+/* === Scroll Lock & Touch Coordinates === */
 let scrollPosition = 0;
 const pageWrap = document.getElementById('page-wrap');
+let touchStartX = 0, touchEndX = 0;
+let touchStartY = 0, touchEndY = 0;
 
-// === Utility Functions ===
+/* === Element Toggle Utility === */
 const elementToggleFunc = (elem) => elem.classList.toggle("active");
 
-// === Sidebar Toggle ===
+/* === Sidebar === */
 const sidebar = document.querySelector("[data-sidebar]");
 const sidebarBtn = document.querySelector("[data-sidebar-btn]");
 if (sidebar && sidebarBtn) {
   sidebarBtn.addEventListener("click", () => elementToggleFunc(sidebar));
 }
 
-// === Modal Elements ===
+/* === Modal Elements === */
 const modalContainer = document.querySelector(".modal-container");
 const modalContent = document.querySelector(".modal-content");
 
-// === Filter Buttons & Dropdown ===
+/* === Filter and Dropdown === */
 const select = document.querySelector("[data-select]");
 const selectItems = document.querySelectorAll("[data-select-item]");
 const selectValue = document.querySelector("[data-select-value]");
@@ -50,7 +50,6 @@ if (filterBtn.length > 0) {
       const selectedValue = this.innerText.toLowerCase();
       if (selectValue) selectValue.innerText = this.innerText;
       filterFunc(selectedValue);
-
       if (lastClickedBtn) lastClickedBtn.classList.remove("active");
       this.classList.add("active");
       lastClickedBtn = this;
@@ -58,7 +57,7 @@ if (filterBtn.length > 0) {
   });
 }
 
-// === Filter Project Items ===
+/* === Filter Function === */
 const filterFunc = (selectedValue) => {
   const dividers = document.querySelectorAll(".divider");
   dividers.forEach((divider) => (divider.style.display = "none"));
@@ -90,10 +89,9 @@ const filterFunc = (selectedValue) => {
 
   adjustProjectImageHeights();
 };
-
 filterFunc("all");
 
-// === Navigation (About / Resume / Projects etc.) ===
+/* === Navigation === */
 const navigationLinks = document.querySelectorAll("[data-nav-link]");
 const pages = document.querySelectorAll("[data-page]");
 
@@ -105,7 +103,6 @@ const showPage = (pageName) => {
   });
 
   window.scrollTo(0, 0);
-
   if (pageName === "projects") {
     waitForProjectImagesToLoad(() => {
       adjustProjectImageHeights();
@@ -124,7 +121,7 @@ navigationLinks.forEach((link) => {
   });
 });
 
-// media.src
+/* === Modal Helpers === */
 function getMediaSrc(media) {
   if (media.tagName.toLowerCase() === 'video') {
     const source = media.querySelector('source');
@@ -133,6 +130,11 @@ function getMediaSrc(media) {
   return media.src;
 }
 
+function isMobile() {
+  return window.innerWidth <= 768;
+}
+
+/* === Modal Navigation Dots === */
 function addDotsNavigation() {
   const dotsHTML = modalImageList.map((_, index) => {
     const isActive = index === currentImageIndex ? "active" : "";
@@ -158,26 +160,18 @@ function addDotsNavigation() {
   });
 }
 
-
-// === Modal Functions ===
+/* === Modal Open/Close === */
 function openModal(src, alt, type) {
   const isFirstOpen = !modalContainer.classList.contains("active");
-
   if (isFirstOpen) {
     scrollPosition = window.scrollY;
     pageWrap.style.top = `-${scrollPosition}px`;
     document.body.classList.add("modal-open");
   }
 
-  let mediaElement;
-  if (type === 'video') {
-    mediaElement = `
-      <video controls muted style="max-width: 90vw; max-height: 90vh; object-fit: contain; border-radius: 8px;">
-        <source src="${src}" type="video/mp4">
-      </video>`;
-  } else {
-    mediaElement = `<img src="${src}" alt="${alt || ""}" style="max-width: 90vw; max-height: 90vh; object-fit: contain; border-radius: 8px;">`;
-  }
+  const mediaElement = type === 'video'
+    ? `<video controls muted style="max-width: 90vw; max-height: 90vh; object-fit: contain; border-radius: 8px;"><source src="${src}" type="video/mp4"></video>`
+    : `<img src="${src}" alt="${alt || ""}" style="max-width: 90vw; max-height: 90vh; object-fit: contain; border-radius: 8px;">`;
 
   modalContent.innerHTML = `
     <button class="modal-close-btn" aria-label="Close modal">&times;</button>
@@ -186,28 +180,12 @@ function openModal(src, alt, type) {
     <span class="modal-arrow modal-next" onclick="showNextMedia(event)">&#10095;</span>
   `;
 
-  const prevArrow = modalContent.querySelector('.modal-prev');
-  const nextArrow = modalContent.querySelector('.modal-next');
-
-  if (currentImageIndex === 0) {
-    prevArrow.classList.add("disabled");
-  }
-  if (currentImageIndex === modalImageList.length - 1) {
-    nextArrow.classList.add("disabled");
-  }
-
-  modalContent.querySelectorAll('.modal-arrow').forEach(arrow => {
-    arrow.addEventListener('click', (e) => e.stopPropagation());
-  });
-
   modalContainer.classList.add("active");
-
-  // Add event listener for close button
   modalContent.querySelector(".modal-close-btn").addEventListener("click", closeModal);
+  modalContent.querySelectorAll('.modal-arrow').forEach(arrow => arrow.addEventListener('click', e => e.stopPropagation()));
 
   addDotsNavigation();
 }
-
 
 function closeModal() {
   const video = modalContent.querySelector("video");
@@ -218,25 +196,19 @@ function closeModal() {
   setTimeout(() => {
     modalContainer.classList.remove("active", "closing");
     modalContent.innerHTML = "";
-
     document.body.classList.remove("modal-open");
     pageWrap.style.top = "";
     window.scrollTo(0, scrollPosition);
   }, 300);
 }
 
-
-function isMobile() {
-  return window.innerWidth <= 768;
-}
-
+/* === Modal Navigation === */
 function showNextMedia(event) {
   if (event) event.stopPropagation();
   if (currentImageIndex < modalImageList.length - 1) {
     currentImageIndex++;
     const media = modalImageList[currentImageIndex];
-    const mediaType = media.tagName.toLowerCase() === 'video' ? 'video' : 'image';
-    openModal(getMediaSrc(media), media.getAttribute('alt'), mediaType);
+    openModal(getMediaSrc(media), media.getAttribute('alt'), media.tagName.toLowerCase());
   }
 }
 
@@ -245,154 +217,87 @@ function showPreviousMedia(event) {
   if (currentImageIndex > 0) {
     currentImageIndex--;
     const media = modalImageList[currentImageIndex];
-    const mediaType = media.tagName.toLowerCase() === 'video' ? 'video' : 'image';
-    openModal(getMediaSrc(media), media.getAttribute('alt'), mediaType);
+    openModal(getMediaSrc(media), media.getAttribute('alt'), media.tagName.toLowerCase());
   }
 }
 
-// === Image Click → Open Modal ===
+/* === Project Media Click === */
 const projectMedia = document.querySelectorAll(".project-images img, .project-images video");
 modalImageList = Array.from(projectMedia);
 
 projectMedia.forEach((media) => {
-  if (media.tagName.toLowerCase() === 'video') {
-    // Add special click handler for videos
-    media.addEventListener("click", (e) => {
+  const isVideo = media.tagName.toLowerCase() === 'video';
+  media.addEventListener("click", (e) => {
+    if (isVideo) {
       const rect = media.getBoundingClientRect();
       const clickY = e.clientY - rect.top;
+      if (clickY > rect.height - 40) return; // Allow native controls
 
-      const isClickInControls = clickY > rect.height - 40; // estimate control height
+      e.preventDefault();
+      e.stopPropagation();
+    }
 
-      if (!isClickInControls) {
-        e.preventDefault();
-        e.stopPropagation();
-
-        const projectItem = media.closest(".project-item");
-        modalImageList = Array.from(projectItem.querySelectorAll(".project-images img, .project-images video"));
-        currentImageIndex = modalImageList.indexOf(media);
-        const mediaType = 'video';
-        openModal(getMediaSrc(media), media.getAttribute('alt'), mediaType);
-      }
-      // else: allow the video to play normally
-    });
-  } else {
-    // For images
-    media.addEventListener("click", () => {
-      const projectItem = media.closest(".project-item");
-      modalImageList = Array.from(projectItem.querySelectorAll(".project-images img, .project-images video"));
-      currentImageIndex = modalImageList.indexOf(media);
-      const mediaType = 'image';
-      openModal(getMediaSrc(media), media.getAttribute('alt'), mediaType);
-    });
-  }
+    const projectItem = media.closest(".project-item");
+    modalImageList = Array.from(projectItem.querySelectorAll(".project-images img, .project-images video"));
+    currentImageIndex = modalImageList.indexOf(media);
+    openModal(getMediaSrc(media), media.getAttribute('alt'), media.tagName.toLowerCase());
+  });
 });
 
-
-
-// === Arrow Key Navigation in Modal ===
+/* === Key & Click Modal Close Events === */
 document.addEventListener("keydown", (event) => {
-  const isModalOpen = modalContainer.classList.contains("active");
-  if (!isModalOpen) return;
-
-  if (event.key === "Escape") {
-    closeModal();
-  } else if (event.key === "ArrowLeft") {
-    showPreviousMedia();
-  } else if (event.key === "ArrowRight") {
-    showNextMedia();
-  }
+  if (!modalContainer.classList.contains("active")) return;
+  if (event.key === "Escape") closeModal();
+  else if (event.key === "ArrowLeft") showPreviousMedia();
+  else if (event.key === "ArrowRight") showNextMedia();
 });
-
-// === Close Modal on Overlay Click ===
-// modalContainer.addEventListener("click", closeModal);
 
 modalContainer.addEventListener("click", (event) => {
-  if (!event.target.closest(".modal-content")) {
-    closeModal();
-  }
+  if (!event.target.closest(".modal-content")) closeModal();
 });
 
-document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape" && modalContainer.classList.contains("active")) {
-    closeModal();
+/* === Swipe Support === */
+function handleSwipeGesture() {
+  const deltaX = touchEndX - touchStartX;
+  const deltaY = touchEndY - touchStartY;
+  const absDeltaX = Math.abs(deltaX);
+  const absDeltaY = Math.abs(deltaY);
+
+  // Determine if the swipe is primarily horizontal or vertical
+  if (absDeltaX > absDeltaY) {
+    // Horizontal swipe
+    if (absDeltaX > 50) { // Threshold for swipe action
+      if (deltaX > 0) {
+        showPreviousMedia(); // Swipe right
+      } else {
+        showNextMedia(); // Swipe left
+      }
+    }
+  } else {
+    // Vertical swipe
+    if (absDeltaY > 50 && deltaY > 0) {
+      closeModal(); // Swipe down
+    }
   }
-});
-
-
-// === Video Playback Speed ===
-const setPlaybackSpeed = () => {
-  const projectVideos = document.querySelectorAll(".project-images video");
-  projectVideos.forEach((video) => {
-    const speed = video.getAttribute("data-playback-speed");
-    if (speed) video.playbackRate = parseFloat(speed);
-  });
-};
+}
 
 modalContainer.addEventListener("touchstart", (e) => {
   touchStartX = e.changedTouches[0].screenX;
-}, false);
-
-modalContainer.addEventListener("touchend", (e) => {
-  touchEndX = e.changedTouches[0].screenX;
-  handleSwipeGesture();
-}, false);
-
-function handleSwipeGesture() {
-  if (Math.abs(touchStartX - touchEndX) < 50) return;
-
-  const media = modalImageList[newIndex];
-  const mediaType = media.tagName.toLowerCase() === 'video' ? 'video' : 'image';
-  openModal(getMediaSrc(media), media.getAttribute('alt'), mediaType);
-
-  const direction = touchEndX < touchStartX ? 'left' : 'right';
-
-  if (direction === 'left') {
-    showNextMedia();
-  } else {
-    showPreviousMedia();
-  }
-
-  // Add animation class
-  modalContent.classList.add(`swipe-${direction}`);
-
-  // Wait for transition then update image
-  setTimeout(() => {
-    currentImageIndex = newIndex;
-    openModal(img.src, img.alt);
-
-    // Remove swipe class after new modal opens
-    setTimeout(() => {
-      modalContent.classList.remove(`swipe-${direction}`);
-    }, 300);
-  }, 50);
-}
-
-let touchStartY = 0;
-let touchEndY = 0;
-
-modalContainer.addEventListener("touchstart", (e) => {
   touchStartY = e.changedTouches[0].screenY;
 }, false);
 
 modalContainer.addEventListener("touchend", (e) => {
+  touchEndX = e.changedTouches[0].screenX;
   touchEndY = e.changedTouches[0].screenY;
-  handleSwipeDownGesture();
+  handleSwipeGesture();
 }, false);
 
-function handleSwipeDownGesture() {
-  if (touchEndY > touchStartY + 50) { // Detects a downward swipe of more than 50px
-    closeModal();
-  }
-}
+// Prevent touchmove event from scrolling the page when modal is open
+modalContainer.addEventListener("touchmove", (e) => {
+  e.preventDefault();
+}, false);
 
-
-// === DOM Ready Logic ===
-document.addEventListener("DOMContentLoaded", () => {
-  setPlaybackSpeed();
-  fixVideoAspectRatio();
-});
-
-// === Theme Toggle ===
+/* === Theme Toggle === */
 const themeToggle = document.getElementById("theme-toggle");
 if (themeToggle) {
   const currentTheme = localStorage.getItem("theme");
@@ -408,68 +313,63 @@ if (themeToggle) {
   });
 }
 
-// === Adjust Project Image Heights ===
+/* === Responsive Project Image Heights === */
 function adjustProjectImageHeights() {
   const items = document.querySelectorAll(".project-item");
   items.forEach(item => {
     const image = item.querySelector(".project-images");
     const details = item.querySelector(".project-details");
-
     if (image && details) {
-      const height = details.getBoundingClientRect().height;
-      image.style.height = `${height}px`;
+      image.style.height = `${details.getBoundingClientRect().height}px`;
     }
   });
 }
 
-// === Wait for Images to Load ===
+/* === Wait for Project Images to Load === */
 function waitForProjectImagesToLoad(callback) {
   const images = document.querySelectorAll(".project-images img");
-  let loadedCount = 0;
-  const total = images.length;
+  let loadedCount = 0, total = images.length;
 
-  if (total === 0) {
-    requestAnimationFrame(callback);
-    return;
-  }
+  if (total === 0) return requestAnimationFrame(callback);
 
-  images.forEach((img) => {
+  images.forEach(img => {
     const checkDone = () => {
       loadedCount++;
       if (loadedCount === total) {
-        requestAnimationFrame(() => {
-          setTimeout(callback, 20);
-        });
+        requestAnimationFrame(() => setTimeout(callback, 20));
       }
     };
-
-    if (img.complete) {
-      checkDone();
-    } else {
-      img.addEventListener("load", checkDone);
-      img.addEventListener("error", checkDone);
-    }
+    img.complete ? checkDone() : img.addEventListener("load", checkDone);
+    img.addEventListener("error", checkDone);
   });
 }
 
-// === Initial Image Height Adjustment ===
 window.addEventListener("load", () => {
-  waitForProjectImagesToLoad(() => {
-    adjustProjectImageHeights();
-  });
+  waitForProjectImagesToLoad(adjustProjectImageHeights);
 });
 
-// === Resize Debounce for Image Heights ===
 let resizeTimeout;
 window.addEventListener("resize", () => {
   clearTimeout(resizeTimeout);
   resizeTimeout = setTimeout(adjustProjectImageHeights, 150);
 });
 
-// === Video Aspect Ratio Fix ===
-const fixVideoAspectRatio = () => {
-  const projectVideos = document.querySelectorAll(".project-images video");
-  projectVideos.forEach((video) => {
+/* === Video Aspect Ratio === */
+function fixVideoAspectRatio() {
+  document.querySelectorAll(".project-images video").forEach(video => {
     video.style.objectFit = "contain";
   });
-};
+}
+
+/* === Playback Speed === */
+function setPlaybackSpeed() {
+  document.querySelectorAll(".project-images video").forEach(video => {
+    const speed = video.getAttribute("data-playback-speed");
+    if (speed) video.playbackRate = parseFloat(speed);
+  });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  setPlaybackSpeed();
+  fixVideoAspectRatio();
+});
