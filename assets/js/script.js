@@ -170,7 +170,7 @@ function openModal(src, alt, type) {
   }
 
   const mediaElement = type === 'video'
-    ? `<video controls muted style="max-width: 90vw; max-height: 90vh; object-fit: contain; border-radius: 8px;"><source src="${src}" type="video/mp4"></video>`
+    ? `<video controls muted poster style="max-width: 90vw; max-height: 90vh; object-fit: contain; border-radius: 8px;"><source src="${src}" type="video/mp4"></video>`
     : `<img src="${src}" alt="${alt || ""}" style="max-width: 90vw; max-height: 90vh; object-fit: contain; border-radius: 8px;">`;
 
   modalContent.innerHTML = `
