@@ -257,35 +257,48 @@ modalContainer.addEventListener("click", (event) => {
 });
 
 /* === Swipe Support === */
+// Handle swipe gestures
 function handleSwipeGesture() {
   const deltaX = touchEndX - touchStartX;
   const deltaY = touchEndY - touchStartY;
-  const absDeltaX = Math.abs(deltaX);
-  const absDeltaY = Math.abs(deltaY);
 
-  // Determine if the swipe is primarily horizontal or vertical
-  if (absDeltaX > absDeltaY) {
-    // Horizontal swipe
-    if (absDeltaX > 50) { // Threshold for swipe action
-      if (deltaX > 0) {
-        showPreviousMedia(); // Swipe right
-      } else {
-        showNextMedia(); // Swipe left
-      }
+  // Horizontal swipe detection
+  if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
+    if (deltaX > 0) {
+      // Swipe right
+      modalContent.classList.add("swipe-right");
+      setTimeout(() => {
+        showPreviousMedia();
+        modalContent.classList.remove("swipe-right");
+      }, 300);
+    } else {
+      // Swipe left
+      modalContent.classList.add("swipe-left");
+      setTimeout(() => {
+        showNextMedia();
+        modalContent.classList.remove("swipe-left");
+      }, 300);
     }
-  } else {
-    // Vertical swipe
-    if (absDeltaY > 50 && deltaY > 0) {
-      closeModal(); // Swipe down
-    }
+  }
+
+  // Vertical swipe detection
+  if (Math.abs(deltaY) > Math.abs(deltaX) && Math.abs(deltaY) > 50 && deltaY > 0) {
+    // Swipe down
+    modalContent.classList.add("swipe-down");
+    setTimeout(() => {
+      closeModal();
+      modalContent.classList.remove("swipe-down");
+    }, 300);
   }
 }
 
+// Detect touch start
 modalContainer.addEventListener("touchstart", (e) => {
   touchStartX = e.changedTouches[0].screenX;
   touchStartY = e.changedTouches[0].screenY;
 }, false);
 
+// Detect touch end
 modalContainer.addEventListener("touchend", (e) => {
   touchEndX = e.changedTouches[0].screenX;
   touchEndY = e.changedTouches[0].screenY;
