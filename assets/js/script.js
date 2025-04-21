@@ -62,18 +62,20 @@ const filterFunc = (selectedValue) => {
   const dividers = document.querySelectorAll(".divider");
   dividers.forEach((divider) => (divider.style.display = "none"));
 
-  const visibleItems = [];
   filterItems.forEach((item) => {
-    const itemCategory = item.dataset.category;
-    if (selectedValue === "all" || selectedValue === itemCategory) {
+    const itemCategories = item.dataset.category.split(" "); // Split categories into an array
+    if (selectedValue === "all" || itemCategories.includes(selectedValue)) {
       item.classList.add("active");
       item.style.display = "block";
-      visibleItems.push(item);
     } else {
       item.classList.remove("active");
       item.style.display = "none";
     }
   });
+
+  const visibleItems = Array.from(filterItems).filter(
+    (item) => item.style.display === "block"
+  );
 
   visibleItems.forEach((item, index) => {
     const projectContent = item.querySelector(".project-content");
@@ -89,6 +91,7 @@ const filterFunc = (selectedValue) => {
 
   adjustProjectImageHeights();
 };
+
 filterFunc("all");
 
 /* === Navigation === */
@@ -170,12 +173,17 @@ function openModal(src, alt, type) {
   }
 
   const mediaElement = type === 'video'
-    ? `<video controls muted style="max-width: 90vw; max-height: 90vh; object-fit: contain; border-radius: 8px;"><source src="${src}" type="video/mp4"></video>`
-    : `<img src="${src}" alt="${alt || ""}" style="max-width: 90vw; max-height: 90vh; object-fit: contain; border-radius: 8px;">`;
+    ? `<video controls muted style="max-width: 80vw; max-height: 80vh; object-fit: contain; border-radius: 8px;">
+         <source src="${src}" type="video/mp4">
+       </video>`
+    : `<img src="${src}" alt="${alt || ""}" style="max-width: 80vw; max-height: 80vh; object-fit: contain; border-radius: 8px;">`;
+
+  const caption = alt || "No description available"; // Default caption if none is provided
 
   modalContent.innerHTML = `
     <button class="modal-close-btn" aria-label="Close modal">&times;</button>
     ${mediaElement}
+    <div class="modal-caption">${caption}</div>
     <span class="modal-arrow modal-prev" onclick="showPreviousMedia(event)">&#10094;</span>
     <span class="modal-arrow modal-next" onclick="showNextMedia(event)">&#10095;</span>
   `;
