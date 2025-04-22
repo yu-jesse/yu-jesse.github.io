@@ -293,20 +293,39 @@ function handleSwipeGesture() {
   // Horizontal swipe detection
   if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
     const media = modalContent.querySelector("img, video");
+    const closeBtn = modalContent.querySelector(".modal-close-btn");
+    const caption = modalContent.querySelector(".modal-caption");
+
     if (deltaX > 0) {
       // Swipe right
-      media.classList.add("swipe-right");
-      media.addEventListener("animationend", () => {
-        showPreviousMedia();
-        media.classList.remove("swipe-right");
-      }, { once: true });
+      [media, closeBtn, caption].forEach((element) => {
+        if (element) element.classList.add("swipe-right");
+      });
+      media.addEventListener(
+        "animationend",
+        () => {
+          showPreviousMedia();
+          [media, closeBtn, caption].forEach((element) => {
+            if (element) element.classList.remove("swipe-right");
+          });
+        },
+        { once: true }
+      );
     } else {
       // Swipe left
-      media.classList.add("swipe-left");
-      media.addEventListener("animationend", () => {
-        showNextMedia();
-        media.classList.remove("swipe-left");
-      }, { once: true });
+      [media, closeBtn, caption].forEach((element) => {
+        if (element) element.classList.add("swipe-left");
+      });
+      media.addEventListener(
+        "animationend",
+        () => {
+          showNextMedia();
+          [media, closeBtn, caption].forEach((element) => {
+            if (element) element.classList.remove("swipe-left");
+          });
+        },
+        { once: true }
+      );
     }
   }
 

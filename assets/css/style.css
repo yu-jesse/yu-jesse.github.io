@@ -1195,11 +1195,18 @@ main {
 }
 
 /* === Swipe Animations === */
-.modal-content.swipe-left {
+.modal-content img.swipe-left,
+.modal-content video.swipe-left,
+.modal-close-btn.swipe-left,
+.modal-caption.swipe-left {
   animation: swipeLeft 0.3s ease forwards;
 }
 
-.modal-content.swipe-right {
+
+.modal-content img.swipe-right,
+.modal-content video.swipe-right,
+.modal-close-btn.swipe-right,
+.modal-caption.swipe-right {
   animation: swipeRight 0.3s ease forwards;
 }
 
