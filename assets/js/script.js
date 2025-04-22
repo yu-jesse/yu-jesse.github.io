@@ -23,6 +23,7 @@ if (sidebar && sidebarBtn) {
 /* === Modal Elements === */
 const modalContainer = document.querySelector(".modal-container");
 const modalContent = document.querySelector(".modal-content");
+const modalContentMedia = document.querySelector(".modal-content img, .modal-content video");
 
 /* === Filter and Dropdown === */
 const select = document.querySelector("[data-select]");
@@ -144,14 +145,10 @@ function addDotsNavigation() {
     return `<span class="modal-dot ${isActive}" data-dot-index="${index}"></span>`;
   }).join("");
 
-  let dotsWrapper = modalContainer.querySelector(".modal-dots");
-  if (!dotsWrapper) {
-    dotsWrapper = document.createElement("div");
-    dotsWrapper.classList.add("modal-dots");
-    modalContainer.appendChild(dotsWrapper); // Append to modal-container
-  }
-
+  const dotsWrapper = document.createElement("div");
+  dotsWrapper.classList.add("modal-dots");
   dotsWrapper.innerHTML = dotsHTML;
+  modalContent.appendChild(dotsWrapper);
 
   dotsWrapper.querySelectorAll(".modal-dot").forEach(dot => {
     dot.addEventListener("click", (e) => {
@@ -278,10 +275,10 @@ function handleSwipeGesture() {
   if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
     if (deltaX > 0) {
       // Swipe right
-      modalContent.classList.add("swipe-right");
+      modalContentMedia.classList.add("swipe-right");
       setTimeout(() => {
         showPreviousMedia();
-        modalContent.classList.remove("swipe-right");
+        modalContentMedia.classList.remove("swipe-right");
       }, 300);
     } else {
       // Swipe left

@@ -1195,11 +1195,13 @@ main {
 }
 
 /* === Swipe Animations === */
-.modal-content.swipe-left {
+.modal-content img.swipe-left,
+.modal-content video.swipe-left {
   animation: swipeLeft 0.3s ease forwards;
 }
 
-.modal-content.swipe-right {
+.modal-content img.swipe-right,
+.modal-content video.swipe-right {
   animation: swipeRight 0.3s ease forwards;
 }
 
@@ -1362,7 +1364,7 @@ body.modal-open {
   content: "✔"; /* Use the same dash as the resume page */
   position: absolute;
   left: 0;
-  color: var(--primary-color); /* Match the color used in the resume */
+  color: var(--light-gray); /* Match the color used in the resume */
   font-weight: var(--fw-400);
 }
 
