@@ -1291,6 +1291,7 @@ main {
 
 /* === Modal Dots === */
 .modal-dots {
+  display: none;
   position: fixed; /* Change to fixed to prevent movement */
   bottom: -1rem; /* Adjust position relative to the viewport */
   left: 50%; /* Center horizontally */
@@ -2054,9 +2055,14 @@ body.modal-open {
     background-color: rgba(0, 0, 0, 0.75);
   }
 
+  .modal-dots {
+    display: flex;
+  }
+
   .modal-dot {
     display: flex;
   }
+
 
 
   /**

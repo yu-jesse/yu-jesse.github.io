@@ -292,20 +292,21 @@ function handleSwipeGesture() {
 
   // Horizontal swipe detection
   if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
+    const media = modalContent.querySelector("img, video");
     if (deltaX > 0) {
       // Swipe right
-      modalContent.classList.add("swipe-right");
-      setTimeout(() => {
+      media.classList.add("swipe-right");
+      media.addEventListener("animationend", () => {
         showPreviousMedia();
-        modalContent.classList.remove("swipe-right");
-      }, 300);
+        media.classList.remove("swipe-right");
+      }, { once: true });
     } else {
       // Swipe left
-      modalContent.classList.add("swipe-left");
-      setTimeout(() => {
+      media.classList.add("swipe-left");
+      media.addEventListener("animationend", () => {
         showNextMedia();
-        modalContent.classList.remove("swipe-left");
-      }, 300);
+        media.classList.remove("swipe-left");
+      }, { once: true });
     }
   }
 
