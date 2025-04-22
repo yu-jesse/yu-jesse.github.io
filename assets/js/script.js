@@ -164,23 +164,6 @@ function addDotsNavigation() {
 }
 
 /* === Modal Open/Close === */
-function updateArrowVisibility() {
-  const prevArrow = document.querySelector(".modal-prev");
-  const nextArrow = document.querySelector(".modal-next");
-
-  if (currentImageIndex === 0) {
-    prevArrow.classList.add("disabled");
-  } else {
-    prevArrow.classList.remove("disabled");
-  }
-
-  if (currentImageIndex === modalImageList.length - 1) {
-    nextArrow.classList.add("disabled");
-  } else {
-    nextArrow.classList.remove("disabled");
-  }
-}
-
 function openModal(src, alt, type) {
   const isFirstOpen = !modalContainer.classList.contains("active");
   if (isFirstOpen) {
@@ -190,10 +173,10 @@ function openModal(src, alt, type) {
   }
 
   const mediaElement = type === 'video'
-    ? `<video controls muted style="max-width: 80vw; max-height: 80vh; object-fit: contain; border-radius: 8px;">
+    ? `<video controls muted style="max-width: 80vw; max-height: 70vh; object-fit: contain; border-radius: 8px;">
          <source src="${src}" type="video/mp4">
        </video>`
-    : `<img src="${src}" alt="${alt || ""}" style="max-width: 80vw; max-height: 80vh; object-fit: contain; border-radius: 8px;">`;
+    : `<img src="${src}" alt="${alt || ""}" style="max-width: 80vw; max-height: 70vh; object-fit: contain; border-radius: 8px;">`;
 
   const caption = alt || "No description available"; // Default caption if none is provided
 
@@ -210,7 +193,6 @@ function openModal(src, alt, type) {
   modalContent.querySelectorAll('.modal-arrow').forEach(arrow => arrow.addEventListener('click', e => e.stopPropagation()));
 
   addDotsNavigation();
-  updateArrowVisibility();
 }
 
 function closeModal() {
@@ -235,7 +217,6 @@ function showNextMedia(event) {
     currentImageIndex++;
     const media = modalImageList[currentImageIndex];
     openModal(getMediaSrc(media), media.getAttribute('alt'), media.tagName.toLowerCase());
-    updateArrowVisibility();
   }
 }
 
@@ -245,7 +226,6 @@ function showPreviousMedia(event) {
     currentImageIndex--;
     const media = modalImageList[currentImageIndex];
     openModal(getMediaSrc(media), media.getAttribute('alt'), media.tagName.toLowerCase());
-    updateArrowVisibility();
   }
 }
 
