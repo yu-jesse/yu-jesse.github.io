@@ -1270,6 +1270,40 @@ main {
   }
 }
 
+/* Slide-in animations */
+@keyframes slideInFromLeft {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInFromRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Classes for the animations */
+.modal-content img.slide-in-left,
+.modal-content video.slide-in-left {
+  animation: slideInFromLeft 0.3s ease forwards;
+}
+
+.modal-content img.slide-in-right,
+.modal-content video.slide-in-right {
+  animation: slideInFromRight 0.3s ease forwards;
+}
+
 /* === Modal Close Button === */
 .modal-close-btn {
   position: absolute;

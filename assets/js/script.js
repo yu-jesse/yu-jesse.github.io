@@ -229,22 +229,62 @@ function closeModal() {
 }
 
 /* === Modal Navigation === */
-function showNextMedia(event) {
+function showNextMedia(event, isSwipe = false) {
   if (event) event.stopPropagation();
   if (currentImageIndex < modalImageList.length - 1) {
     currentImageIndex++;
     const media = modalImageList[currentImageIndex];
-    openModal(getMediaSrc(media), media.getAttribute('alt'), media.tagName.toLowerCase());
+    const mediaType = media.tagName.toLowerCase() === 'video' ? 'video' : 'image';
+
+    // If triggered by swipe, add the slide-in animation
+    if (isSwipe) {
+      modalContent.querySelector(mediaType).classList.add("slide-in-right");
+    }
+
+    openModal(getMediaSrc(media), media.getAttribute('alt'), mediaType);
+
+    // Remove the animation class after it finishes
+    if (isSwipe) {
+      const newMedia = modalContent.querySelector(mediaType);
+      newMedia.addEventListener(
+        "animationend",
+        () => {
+          newMedia.classList.remove("slide-in-right");
+        },
+        { once: true }
+      );
+    }
+
     updateArrowVisibility();
   }
 }
 
-function showPreviousMedia(event) {
+function showPreviousMedia(event, isSwipe = false) {
   if (event) event.stopPropagation();
   if (currentImageIndex > 0) {
     currentImageIndex--;
     const media = modalImageList[currentImageIndex];
-    openModal(getMediaSrc(media), media.getAttribute('alt'), media.tagName.toLowerCase());
+    const mediaType = media.tagName.toLowerCase() === 'video' ? 'video' : 'image';
+
+    // If triggered by swipe, add the slide-in animation
+    if (isSwipe) {
+      modalContent.querySelector(mediaType).classList.add("slide-in-left");
+    }
+
+    openModal(getMediaSrc(media), media.getAttribute('alt'), mediaType);
+
+    // Remove the animation class after it finishes
+    if (isSwipe) {
+      const newMedia = modalContent.querySelector(mediaType);
+      newMedia.addEventListener(
+        "animationend",
+        () => {
+          newMedia.classList.remove("slide-in-left");
+        },
+        { once: true }
+      );
+    }
+
     updateArrowVisibility();
   }
 }
@@ -292,40 +332,12 @@ function handleSwipeGesture() {
 
   // Horizontal swipe detection
   if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
-    const media = modalContent.querySelector("img, video");
-    const closeBtn = modalContent.querySelector(".modal-close-btn");
-    const caption = modalContent.querySelector(".modal-caption");
-
     if (deltaX > 0) {
       // Swipe right
-      [media, closeBtn, caption].forEach((element) => {
-        if (element) element.classList.add("swipe-right");
-      });
-      media.addEventListener(
-        "animationend",
-        () => {
-          showPreviousMedia();
-          [media, closeBtn, caption].forEach((element) => {
-            if (element) element.classList.remove("swipe-right");
-          });
-        },
-        { once: true }
-      );
+      showPreviousMedia(null, true); // Pass `true` to indicate swipe
     } else {
       // Swipe left
-      [media, closeBtn, caption].forEach((element) => {
-        if (element) element.classList.add("swipe-left");
-      });
-      media.addEventListener(
-        "animationend",
-        () => {
-          showNextMedia();
-          [media, closeBtn, caption].forEach((element) => {
-            if (element) element.classList.remove("swipe-left");
-          });
-        },
-        { once: true }
-      );
+      showNextMedia(null, true); // Pass `true` to indicate swipe
     }
   }
 
