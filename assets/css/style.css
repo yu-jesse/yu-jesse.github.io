@@ -1195,13 +1195,11 @@ main {
 }
 
 /* === Swipe Animations === */
-.modal-content img.swipe-left,
-.modal-content video.swipe-left {
+.modal-content.swipe-left {
   animation: swipeLeft 0.3s ease forwards;
 }
 
-.modal-content img.swipe-right,
-.modal-content video.swipe-right {
+.modal-content.swipe-right {
   animation: swipeRight 0.3s ease forwards;
 }
 
@@ -1294,7 +1292,7 @@ main {
 /* === Modal Dots === */
 .modal-dots {
   position: fixed; /* Change to fixed to prevent movement */
-  bottom: -2rem; /* Adjust position relative to the viewport */
+  bottom: -1rem; /* Adjust position relative to the viewport */
   left: 50%; /* Center horizontally */
   transform: translateX(-50%); /* Center alignment */
   display: flex;
@@ -1305,6 +1303,7 @@ main {
 }
 
 .modal-dot {
+  display: none;
   width: 12px;
   height: 12px;
   border-radius: 50%;
@@ -2053,6 +2052,10 @@ body.modal-open {
   
   .modal-arrow:hover {
     background-color: rgba(0, 0, 0, 0.75);
+  }
+
+  .modal-dot {
+    display: flex;
   }
 
 

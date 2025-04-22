@@ -164,6 +164,23 @@ function addDotsNavigation() {
 }
 
 /* === Modal Open/Close === */
+function updateArrowVisibility() {
+  const prevArrow = document.querySelector(".modal-prev");
+  const nextArrow = document.querySelector(".modal-next");
+
+  if (currentImageIndex === 0) {
+    prevArrow.classList.add("disabled");
+  } else {
+    prevArrow.classList.remove("disabled");
+  }
+
+  if (currentImageIndex === modalImageList.length - 1) {
+    nextArrow.classList.add("disabled");
+  } else {
+    nextArrow.classList.remove("disabled");
+  }
+}
+
 function openModal(src, alt, type) {
   const isFirstOpen = !modalContainer.classList.contains("active");
   if (isFirstOpen) {
@@ -193,6 +210,7 @@ function openModal(src, alt, type) {
   modalContent.querySelectorAll('.modal-arrow').forEach(arrow => arrow.addEventListener('click', e => e.stopPropagation()));
 
   addDotsNavigation();
+  updateArrowVisibility();
 }
 
 function closeModal() {
@@ -217,6 +235,7 @@ function showNextMedia(event) {
     currentImageIndex++;
     const media = modalImageList[currentImageIndex];
     openModal(getMediaSrc(media), media.getAttribute('alt'), media.tagName.toLowerCase());
+    updateArrowVisibility();
   }
 }
 
@@ -226,6 +245,7 @@ function showPreviousMedia(event) {
     currentImageIndex--;
     const media = modalImageList[currentImageIndex];
     openModal(getMediaSrc(media), media.getAttribute('alt'), media.tagName.toLowerCase());
+    updateArrowVisibility();
   }
 }
 
@@ -274,19 +294,17 @@ function handleSwipeGesture() {
   if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
     if (deltaX > 0) {
       // Swipe right
-      const media = modalContent.querySelector("img, video");
-      media.classList.add("swipe-right");
+      modalContent.classList.add("swipe-right");
       setTimeout(() => {
         showPreviousMedia();
-        media.classList.remove("swipe-right");
+        modalContent.classList.remove("swipe-right");
       }, 300);
     } else {
       // Swipe left
-      const media = modalContent.querySelector("img, video");
-      media.classList.add("swipe-left");
+      modalContent.classList.add("swipe-left");
       setTimeout(() => {
         showNextMedia();
-        media.classList.remove("swipe-left");
+        modalContent.classList.remove("swipe-left");
       }, 300);
     }
   }
