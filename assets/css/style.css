@@ -1291,12 +1291,13 @@ main {
 
 /* === Modal Dots === */
 .modal-dots {
-  position: fixed;
-  bottom: -2rem; /* Move the dots further below the modal */
+  position: fixed; /* Change to fixed to prevent movement */
+  bottom: -2rem; /* Adjust position relative to the viewport */
+  left: 50%; /* Center horizontally */
+  transform: translateX(-50%); /* Center alignment */
   display: flex;
   justify-content: center;
   gap: 0.5rem;
-  width: 100%;
   z-index: 10001;
   pointer-events: auto; /* Ensure they are clickable */
 }
@@ -1305,7 +1306,7 @@ main {
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: var(--jet);
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
@@ -1315,7 +1316,8 @@ main {
 }
 
 .modal-caption {
-  margin-top: 5px; /* Adjust for bottom placement */
+  margin-top: 1rem; /* Adjust for top placement */
+  margin-bottom: 1rem; /* Adjust for bottom placement */
   font-size: var(--fs-7);
   color: var(--light-gray);
   text-align: center;
