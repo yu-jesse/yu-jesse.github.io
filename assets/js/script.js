@@ -144,10 +144,14 @@ function addDotsNavigation() {
     return `<span class="modal-dot ${isActive}" data-dot-index="${index}"></span>`;
   }).join("");
 
-  const dotsWrapper = document.createElement("div");
-  dotsWrapper.classList.add("modal-dots");
+  let dotsWrapper = modalContainer.querySelector(".modal-dots");
+  if (!dotsWrapper) {
+    dotsWrapper = document.createElement("div");
+    dotsWrapper.classList.add("modal-dots");
+    modalContainer.appendChild(dotsWrapper); // Append to modal-container
+  }
+
   dotsWrapper.innerHTML = dotsHTML;
-  modalContent.appendChild(dotsWrapper);
 
   dotsWrapper.querySelectorAll(".modal-dot").forEach(dot => {
     dot.addEventListener("click", (e) => {
