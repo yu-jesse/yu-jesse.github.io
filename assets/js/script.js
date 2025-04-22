@@ -23,7 +23,6 @@ if (sidebar && sidebarBtn) {
 /* === Modal Elements === */
 const modalContainer = document.querySelector(".modal-container");
 const modalContent = document.querySelector(".modal-content");
-const modalContentMedia = document.querySelector(".modal-content img, .modal-content video");
 
 /* === Filter and Dropdown === */
 const select = document.querySelector("[data-select]");
@@ -275,17 +274,19 @@ function handleSwipeGesture() {
   if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
     if (deltaX > 0) {
       // Swipe right
-      modalContentMedia.classList.add("swipe-right");
+      const media = modalContent.querySelector("img, video");
+      media.classList.add("swipe-right");
       setTimeout(() => {
         showPreviousMedia();
-        modalContentMedia.classList.remove("swipe-right");
+        media.classList.remove("swipe-right");
       }, 300);
     } else {
       // Swipe left
-      modalContent.classList.add("swipe-left");
+      const media = modalContent.querySelector("img, video");
+      media.classList.add("swipe-left");
       setTimeout(() => {
         showNextMedia();
-        modalContent.classList.remove("swipe-left");
+        media.classList.remove("swipe-left");
       }, 300);
     }
   }
