@@ -1291,7 +1291,7 @@ main {
 
 /* === Modal Dots === */
 .modal-dots {
-  position: absolute;
+  position: fixed;
   bottom: -2rem; /* Move the dots further below the modal */
   display: flex;
   justify-content: center;
