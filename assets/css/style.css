@@ -2402,13 +2402,13 @@ body.modal-open {
    */
 
   main {
-    max-width: 1400px;
+    max-width: 2000px;
     margin-inline: auto;
     display: flex;
     justify-content: center;
     align-items: stretch;
     gap: flex(25px, 5%);
-    margin-right: 40px;
+    margin-right: 75px;
     margin-left: 30px;
   }
 

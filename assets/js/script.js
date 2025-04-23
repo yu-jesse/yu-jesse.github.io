@@ -466,13 +466,6 @@ document.addEventListener("DOMContentLoaded", () => {
   if (mainContent && !mainContent.classList.contains("visible")) {
     mainContent.classList.add("visible");
   }
-
-  // Initial fix if landing on projects page
-  if (savedPage === "projects") {
-    waitForProjectImagesToLoad(() => {
-      adjustProjectImageHeights();
-    });
-  }
 });
 
 
