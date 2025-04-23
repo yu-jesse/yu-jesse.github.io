@@ -562,8 +562,17 @@ main {
 .navbar-link:focus { color: var(--light-gray-70); }
 
 .navbar-link.active { 
-  color: var(--orange);}
+  color: var(--orange);
+}
 
+.navbar {
+  opacity: 0;
+  transition: opacity 0.3s ease; /* Match main-content */
+}
+
+body.page-ready .navbar {
+  opacity: 1;
+}
 
 
 
@@ -1825,6 +1834,22 @@ body.modal-open {
     border-radius: 16px; 
   }
 
+  .modal-prev,
+  .modal-next {
+    position: absolute;
+    top: 50%; /* Center vertically */
+    transform: translateY(-50%); /* Adjust for perfect centering */
+    z-index: 999; /* Ensure it stays above other elements */
+  }
+
+  .modal-prev {
+    left: 1rem;
+  }
+  
+  .modal-next {
+    right: 1rem;
+  }
+
 
   /**
    * #CREDITS
@@ -2066,14 +2091,6 @@ body.modal-open {
 
   .modal-arrow.disabled {
     display: none
-  }
-  
-  .modal-prev {
-    left: 1rem;
-  }
-  
-  .modal-next {
-    right: 1rem;
   }
   
   .modal-arrow:hover {

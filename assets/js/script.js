@@ -473,11 +473,15 @@ document.addEventListener("DOMContentLoaded", () => {
 window.addEventListener("load", () => {
   const savedPage = localStorage.getItem("lastSelectedPage") || "projects";
 
-  showPage(savedPage); // ✅ NOW we show the correct page AFTER full page load
+  showPage(savedPage);
 
   if (savedPage === "projects") {
     waitForProjectImagesToLoad(adjustProjectImageHeights);
   }
+
+  // ✨ Trigger all fade-in targets (navbar, content, etc.)
+  document.body.classList.add("page-ready");
 });
+
 
 
