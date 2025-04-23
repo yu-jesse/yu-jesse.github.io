@@ -216,6 +216,13 @@ body {
   background: var(--smoky-black); 
 }
 
+[data-page] {
+  display: none;
+}
+
+[data-page].active {
+  display: block;
+}
 
 
 
@@ -555,9 +562,7 @@ main {
 .navbar-link:focus { color: var(--light-gray-70); }
 
 .navbar-link.active { 
-  color: var(--orange);
-  font-weight: bold; 
-}
+  color: var(--orange);}
 
 
 

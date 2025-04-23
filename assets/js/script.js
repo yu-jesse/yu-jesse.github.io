@@ -106,6 +106,7 @@ const showPage = (pageName) => {
   });
 
   window.scrollTo(0, 0);
+
   if (pageName === "projects") {
     waitForProjectImagesToLoad(() => {
       adjustProjectImageHeights();
@@ -113,8 +114,8 @@ const showPage = (pageName) => {
   }
 };
 
+
 const lastSelectedPage = localStorage.getItem("lastSelectedPage") || "projects";
-showPage(lastSelectedPage);
 
 navigationLinks.forEach((link) => {
   link.addEventListener("click", () => {
@@ -425,21 +426,14 @@ window.addEventListener("load", () => {
 });
 
 let resizeTimeout;
-let previousIsMobile = window.innerWidth < 768;
 
 window.addEventListener("resize", () => {
   clearTimeout(resizeTimeout);
   resizeTimeout = setTimeout(() => {
-    const isNowMobile = window.innerWidth < 768;
-
-    // Trigger only if crossing mobile-desktop threshold or expanding on desktop
-    if (isNowMobile !== previousIsMobile || !isNowMobile) {
-      adjustProjectImageHeights();
-    }
-
-    previousIsMobile = isNowMobile;
+    adjustProjectImageHeights();
   }, 150);
 });
+
 
 
 /* === Video Aspect Ratio === */
@@ -461,37 +455,36 @@ document.addEventListener("DOMContentLoaded", () => {
   setPlaybackSpeed();
   fixVideoAspectRatio();
 
-  const savedPage = localStorage.getItem("lastSelectedPage") || "projects";
-  showPage(savedPage);
-
-  // Setup ResizeObserver for future changes
+  // Setup ResizeObserver
   const observer = new ResizeObserver(adjustProjectImageHeights);
   document.querySelectorAll(".project-details").forEach(details => {
     observer.observe(details);
   });
 
-  // Fallback visibility
+  // Show content
   const mainContent = document.querySelector(".main-content");
   if (mainContent && !mainContent.classList.contains("visible")) {
     mainContent.classList.add("visible");
   }
 
-  // Handle Resize Events
-  let resizeTimeout;
-  window.addEventListener("resize", () => {
-    clearTimeout(resizeTimeout);
-    resizeTimeout = setTimeout(adjustProjectImageHeights, 150);
-  });
+  // Initial fix if landing on projects page
+  if (savedPage === "projects") {
+    waitForProjectImagesToLoad(() => {
+      adjustProjectImageHeights();
+    });
+  }
 });
+
 
 // Move height sync to full load
 window.addEventListener("load", () => {
-  waitForProjectImagesToLoad(() => {
-    adjustProjectImageHeights();
+  const savedPage = localStorage.getItem("lastSelectedPage") || "projects";
 
-    const mainContent = document.querySelector(".main-content");
-    if (mainContent) {
-      mainContent.classList.add("visible");
-    }
-  });
+  showPage(savedPage); // ✅ NOW we show the correct page AFTER full page load
+
+  if (savedPage === "projects") {
+    waitForProjectImagesToLoad(adjustProjectImageHeights);
+  }
 });
+
+
