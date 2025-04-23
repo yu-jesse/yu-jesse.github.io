@@ -361,6 +361,15 @@ main {
   min-width: 259px;
 }
 
+.main-content {
+  opacity: 0; /* Hide the content initially */
+  transition: opacity 0.3s ease; /* Smooth fade-in effect */
+}
+
+.main-content.visible {
+  opacity: 1; /* Make the content visible */
+}
+
 
 
 /*-----------------------------------*\
@@ -545,7 +554,10 @@ main {
 .navbar-link:hover,
 .navbar-link:focus { color: var(--light-gray-70); }
 
-.navbar-link.active { color: var(--orange); }
+.navbar-link.active { 
+  color: var(--orange);
+  font-weight: bold; 
+}
 
 
 
@@ -1170,7 +1182,7 @@ main {
   padding: 0;
   overflow: show;
   background: transparent;
-  border-radius: 8px;
+  border-radius: 8px; 
   animation: fadeInScale 0.2s ease forwards;
   transition: transform 0.3s ease, opacity 0.3s ease;
 } 
@@ -1477,9 +1489,10 @@ body.modal-open {
 
 /* Sublist for Icons */
 .icon-credit-sublist {
-  list-style-type: disc;
+  display: flex;
+  flex-direction: column; /* Stack items vertically */
+  gap: 8px; /* Space between items */
   padding-left: 20px;
-  margin-top: 8px;
 }
 
 .icon-credit-sublist li {
@@ -2167,6 +2180,14 @@ body.modal-open {
 
   .credits-item {
     max-width: calc(50% - 20px);
+  }
+
+  .icon-credit-sublist {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two equal columns */
+    gap: 10px 50px; /* Space between items */
+    padding-left: 0; /* Optional: Adjust padding for larger screens */
+    max-width: 97%; /* Ensure it doesn't exceed the container width */
   }
 }
 

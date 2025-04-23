@@ -377,15 +377,29 @@ if (themeToggle) {
 
 /* === Responsive Project Image Heights === */
 function adjustProjectImageHeights() {
+  if (window.innerWidth < 768) {
+    document.querySelectorAll(".project-images").forEach(img => {
+      img.style.height = "";
+      img.style.minHeight = "";
+    });
+    return;
+  }
+
   const items = document.querySelectorAll(".project-item");
   items.forEach(item => {
     const image = item.querySelector(".project-images");
     const details = item.querySelector(".project-details");
+
     if (image && details) {
-      image.style.height = `${details.getBoundingClientRect().height}px`;
+      const height = details.getBoundingClientRect().height;
+      image.style.minHeight = `${height}px`;
+      image.style.height = `${height}px`;
     }
   });
 }
+
+
+
 
 /* === Wait for Project Images to Load === */
 function waitForProjectImagesToLoad(callback) {
@@ -398,7 +412,7 @@ function waitForProjectImagesToLoad(callback) {
     const checkDone = () => {
       loadedCount++;
       if (loadedCount === total) {
-        requestAnimationFrame(() => setTimeout(callback, 20));
+        requestAnimationFrame(() => setTimeout(callback, 30));
       }
     };
     img.complete ? checkDone() : img.addEventListener("load", checkDone);
@@ -411,10 +425,22 @@ window.addEventListener("load", () => {
 });
 
 let resizeTimeout;
+let previousIsMobile = window.innerWidth < 768;
+
 window.addEventListener("resize", () => {
   clearTimeout(resizeTimeout);
-  resizeTimeout = setTimeout(adjustProjectImageHeights, 150);
+  resizeTimeout = setTimeout(() => {
+    const isNowMobile = window.innerWidth < 768;
+
+    // Trigger only if crossing mobile-desktop threshold or expanding on desktop
+    if (isNowMobile !== previousIsMobile || !isNowMobile) {
+      adjustProjectImageHeights();
+    }
+
+    previousIsMobile = isNowMobile;
+  }, 150);
 });
+
 
 /* === Video Aspect Ratio === */
 function fixVideoAspectRatio() {
@@ -434,4 +460,38 @@ function setPlaybackSpeed() {
 document.addEventListener("DOMContentLoaded", () => {
   setPlaybackSpeed();
   fixVideoAspectRatio();
+
+  const savedPage = localStorage.getItem("lastSelectedPage") || "projects";
+  showPage(savedPage);
+
+  // Setup ResizeObserver for future changes
+  const observer = new ResizeObserver(adjustProjectImageHeights);
+  document.querySelectorAll(".project-details").forEach(details => {
+    observer.observe(details);
+  });
+
+  // Fallback visibility
+  const mainContent = document.querySelector(".main-content");
+  if (mainContent && !mainContent.classList.contains("visible")) {
+    mainContent.classList.add("visible");
+  }
+
+  // Handle Resize Events
+  let resizeTimeout;
+  window.addEventListener("resize", () => {
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(adjustProjectImageHeights, 150);
+  });
+});
+
+// Move height sync to full load
+window.addEventListener("load", () => {
+  waitForProjectImagesToLoad(() => {
+    adjustProjectImageHeights();
+
+    const mainContent = document.querySelector(".main-content");
+    if (mainContent) {
+      mainContent.classList.add("visible");
+    }
+  });
 });
