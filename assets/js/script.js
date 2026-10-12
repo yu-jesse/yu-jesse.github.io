@@ -108,9 +108,9 @@ const showPage = (pageName) => {
   window.scrollTo(0, 0);
 
   if (pageName === "projects") {
-    waitForProjectImagesToLoad(() => {
-      adjustProjectImageHeights();
-    });
+    // The media column height is driven by the text column, which lays out
+    // immediately. No need to wait for images or videos to finish loading.
+    requestAnimationFrame(adjustProjectImageHeights);
   }
 };
 
@@ -402,27 +402,8 @@ function adjustProjectImageHeights() {
 
 
 
-/* === Wait for Project Images to Load === */
-function waitForProjectImagesToLoad(callback) {
-  const images = document.querySelectorAll(".project-images img");
-  let loadedCount = 0, total = images.length;
-
-  if (total === 0) return requestAnimationFrame(callback);
-
-  images.forEach(img => {
-    const checkDone = () => {
-      loadedCount++;
-      if (loadedCount === total) {
-        requestAnimationFrame(() => setTimeout(callback, 30));
-      }
-    };
-    img.complete ? checkDone() : img.addEventListener("load", checkDone);
-    img.addEventListener("error", checkDone);
-  });
-}
-
-window.addEventListener("load", () => {
-  waitForProjectImagesToLoad(adjustProjectImageHeights);
+document.addEventListener("DOMContentLoaded", () => {
+  adjustProjectImageHeights();
 });
 
 let resizeTimeout;
@@ -474,10 +455,6 @@ window.addEventListener("load", () => {
   const savedPage = localStorage.getItem("lastSelectedPage") || "projects";
 
   showPage(savedPage);
-
-  if (savedPage === "projects") {
-    waitForProjectImagesToLoad(adjustProjectImageHeights);
-  }
 
   // ✨ Trigger all fade-in targets (navbar, content, etc.)
   document.body.classList.add("page-ready");
